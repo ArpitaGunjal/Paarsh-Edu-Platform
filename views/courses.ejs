@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Courses - Paarsh Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/course-detail.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Explore Our Courses</h1>
+            <p>Find the perfect course to kickstart your career journey</p>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses-section">
+        <div class="container">
+            <!-- Category Filter -->
+            <div class="courses-filter">
+                <a href="/courses" class="filter-btn <%= !selectedCategory ? 'active' : '' %>">
+                    All Courses
+                </a>
+                <% categories.forEach(category => { %>
+                <a href="/courses?category=<%= category %>" 
+                   class="filter-btn <%= selectedCategory === category ? 'active' : '' %>">
+                    <%= category.replace('-', ' ') %>
+                </a>
+                <% }); %>
+            </div>
+
+            <!-- Courses Grid -->
+            <% if (courses.length > 0) { %>
+            <div class="courses-grid">
+                <% courses.forEach(course => { %>
+                <div class="course-card">
+                    <% 
+                    const progress = ((course.enrolledCount / course.intakeLimit) * 100).toFixed(0);
+                    const seatsLeft = course.intakeLimit - course.enrolledCount;
+                    %>
+                    <div class="course-badge">
+                        <% if (seatsLeft <= 10 && seatsLeft > 0) { %>
+                        <span class="badge badge-warning">Few Seats Left</span>
+                        <% } else if (seatsLeft > 10) { %>
+                        <span class="badge badge-success">Open</span>
+                        <% } else { %>
+                        <span class="badge badge-warning">Full</span>
+                        <% } %>
+                    </div>
+                    <div class="course-header">
+                        <h3><%= course.name %></h3>
+                        <p class="course-category">
+                            <i class="fas fa-tag"></i> <%= course.category.replace('-', ' ') %>
+                        </p>
+                    </div>
+                    <div class="course-body">
+                        <p class="course-description">
+                            <%= course.description || 'Comprehensive training program designed to equip you with industry-ready skills and practical knowledge.' %>
+                        </p>
+                        <div class="course-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span><%= course.duration %></span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-users"></i>
+                                <span><%= course.enrolledCount %> enrolled</span>
+                            </div>
+                        </div>
+                        <div class="course-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: <%= progress %>%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">
+                            <span class="price">₹<%= course.fee.toLocaleString() %></span>
+                        </div>
+                        <a href="/course/<%= course._id %>" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+            <% } else { %>
+            <div class="no-courses">
+                <i class="fas fa-inbox"></i>
+                <h3>No Courses Found</h3>
+                <p>Sorry, we couldn't find any courses in this category. Please try another category.</p>
+                <a href="/courses" class="btn btn-primary" style="margin-top: 20px;">View All Courses</a>
+            </div>
+            <% } %>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

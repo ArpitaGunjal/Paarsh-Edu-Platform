@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paarsh Education - Transform Your Future</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-shapes">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>
+                    Education is the door to the future
+                    & <span class="highlight">Paarsh Edu</span> is the key to a bright future
+                </h1>
+                <p>We provide innovative and accessible educational solutions, empowering individuals to unlock their potential and shape a brighter future.</p>
+                
+                <div class="hero-buttons">
+                    <a href="/courses" class="btn btn-primary">View Courses</a>
+                    <a href="tel:+919075201035" class="btn btn-secondary">
+                        <i class="fas fa-phone"></i> +91 90752 01035
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Courses Section -->
+<section class="top-courses-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Top Courses</h2>
+      <p>Discover top courses to elevate your skills and unlock new opportunities for personal growth.</p>
+    </div>
+
+    <div class="courses-slider-wrapper">
+      <div class="courses-slider">
+        <% courses.forEach(course => { %>
+        <div class="course-card-pro">
+          <div class="course-image-pro">
+            <img 
+              src="<%= course.thumbnail || 'https://source.unsplash.com/600x400/?technology,education' %>" 
+              alt="<%= course.title %>"
+            />
+            <span class="course-tag"><%= course.category %></span>
+          </div>
+
+          <div class="course-content-pro">
+            <h3><%= course.title %></h3>
+            <p><%= course.description %></p>
+
+            <div class="course-meta-pro">
+              <span><i class="fas fa-clock"></i> <%= course.duration || "N/A" %></span>
+              <span><i class="fas fa-certificate"></i> Certificate</span>
+            </div>
+
+            <div class="course-footer-pro">
+              <span class="students">
+                <i class="fas fa-users"></i> <%= course.enrolledCount || 0 %> Students
+              </span>
+              <a href="/course/<%= course._id %>" class="view-btn">View</a>
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+    <!-- What Would You Like To Learn Section -->
+    <section class="learn-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Would You Like To <span class="highlight-blue">Learn</span></h2>
+                <p>Explore More and more.</p>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <button class="category-tab active" data-category="non-it">NON-IT</button>
+                <button class="category-tab" data-category="languages">LANGUAGES</button>
+                <button class="category-tab" data-category="graphics">GRAPHICS DESIGNING</button>
+                <button class="category-tab" data-category="animation">ANIMATION</button>
+                <button class="category-tab" data-category="cloud">CLOUD TECHNOLOGIES</button>
+                <button class="category-tab" data-category="civil">CIVIL SERVICE</button>
+                <button class="category-tab" data-category="aptitude">APTITUDE TEST</button>
+                <button class="category-tab" data-category="accounts">ACCOUNTS/TALLY</button>
+                <button class="category-tab" data-category="stock">STOCK MARKET</button>
+                <button class="category-tab" data-category="education">STANDARD EDUCATION</button>
+                <button class="category-tab" data-category="database">DATABASE</button>
+                <button class="category-tab" data-category="soft-skills">SOFT SKILL & COMMUNICATION</button>
+                <button class="category-tab" data-category="bpms">BPMS SOFTWARE</button>
+                <button class="category-tab" data-category="training">TRAINING</button>
+                <button class="category-tab" data-category="music">MUSICAL INSTRUMENT</button>
+                <button class="category-tab" data-category="pharma">PHARMACEUTICALS</button>
+                <button class="category-tab" data-category="vedic">VEDIC MATH</button>
+                <button class="category-tab" data-category="digital">DIGITAL MARKETING</button>
+                <button class="category-tab" data-category="frameworks">FRAMEWORKS</button>
+                <button class="category-tab" data-category="it">IT</button>
+                <button class="category-tab" data-category="sales">SALES & MARKETING</button>
+            </div>
+
+            <!-- Courses Grid -->
+            <div class="courses-grid-learn">
+                <% const learnCourses = courses.slice(3, 6); %>
+                <% learnCourses.forEach((course, index) => { %>
+                <div class="course-card-learn">
+                    <div class="course-badge-learn">
+                        <span class="badge-nonit">NON-IT</span>
+                    </div>
+                    <div class="course-visual">
+                        <div class="visual-icon">
+                            <i class="fas fa-<%= index === 0 ? 'chart-bar' : index === 1 ? 'database' : 'brain' %>"></i>
+                        </div>
+                        <div class="visual-graphic">
+                            <img src="https://via.placeholder.com/300x200/14bdee/ffffff?text=<%= course.name.replace(/ /g, '+') %>" alt="<%= course.name %>">
+                        </div>
+                    </div>
+                    <div class="course-details-learn">
+                        <h3><%= course.name %></h3>
+                        <p><%= course.description || 'Turn raw data into insights with our hands-on ' + course.name + ' Program.' %></p>
+                        <div class="course-meta-learn">
+                            <span><i class="fas fa-certificate"></i> Certificate</span>
+                            <span><i class="fas fa-clock"></i> 180</span>
+                            <span><i class="fas fa-signal"></i> beginner</span>
+                            <span><i class="fas fa-users"></i> <%= course.enrolledCount %> students</span>
+                        </div>
+                        <div class="course-language-learn">
+                            <i class="fas fa-globe"></i> English, Hindi
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Work Section -->
+    <section class="how-we-work-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How We Work</h2>
+                <p>Streamlined processes, innovative solutions, and dedicated teamwork to deliver exceptional results every time.</p>
+            </div>
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <div class="video-placeholder">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800" alt="Team Working" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Benefits Section -->
+    <section class="benefits-section" id="benefits">
+        <div class="container">
+            <div class="benefits-wrapper">
+                <div class="benefits-content">
+                    <h2>Our Benefits</h2>
+                    <p class="benefits-subtitle">Empower your learning journey with our comprehensive educational benefits. We offer expert guidance, innovative resources, and personalized support to help you achieve excellence.</p>
+                    
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            <span>Deliver quality education to your learners</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            <span>Automatically add completion certificates</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            <span>Provide video, documents, or external links</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            <span>Customize our flexible pricing plans</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            <span>Manage the courses our learners study</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            <span>friendly environment</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="benefits-visual">
+                    <div class="visual-illustration">
+                        <div class="illustration-content">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategies for Student Section -->
+    <section class="strategies-section">
+        <div class="container">
+            <div class="section-header">
+                <h2><span class="highlight-blue">Strategies</span> for Student</h2>
+                <p>Smart strategies to boost student success—time management, productivity hacks, and study techniques for better learning, focus, and academic excellence!</p>
+            </div>
+            
+            <div class="strategies-grid">
+                <div class="strategy-visual">
+                    <div class="visual-illustration-strategy">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                </div>
+                
+                <div class="strategies-content">
+                    <div class="strategy-item">
+                        <h3>Remote Classrooms</h3>
+                        <p>Run and Manage Interactive webinars to permit a personalized learning experience.</p>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <h3>Course Manager</h3>
+                        <p>Manage the courses your learners study from different sources and follow them to their individual needs.</p>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <h3>Paarsh Edu</h3>
+                        <p>Provide video, documents, or external links like Youtube-based internal training to complete the pieces of training.</p>
+                    </div>
+                </div>
+                
+                <div class="strategies-content">
+                    <div class="strategy-item">
+                        <h3>Scalable Pricing</h3>
+                        <p>Customize our flexible pricing strategies to suit our learners needs and budget.</p>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <h3>Certificates</h3>
+                        <p>Automatically add achievement certificates to the learner's education tracker whether studied online, offline, or via Google Meet.</p>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <h3>24/7 Support</h3>
+                        <p>Create an in-person or a virtual classroom session and track the attendance by Online Google Sheet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Students Says</h2>
+                <p>Hear from our students about their experiences, achievements, and how our courses have helped them grow.</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"PaarshEdu has been an incredible experience, enhancing my skills across multiple domains. It empowers me to make informed decisions and grow professionally."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://i.pravatar.cc/150?img=12" alt="Praful Jadhav">
+                        </div>
+                        <div class="author-info">
+                            <h4>Praful Jadhav</h4>
+                            <p>Jr. UI Engineer @Artify Inc.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"My internship with PaarshEdu was intense and rewarding. I gained invaluable knowledge from diverse fields, and I'm truly grateful for this unique learning opportunity."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://i.pravatar.cc/150?img=5" alt="Mitesh Dalavi">
+                        </div>
+                        <div class="author-info">
+                            <h4>Mitesh Dalavi</h4>
+                            <p>Associate Software Developer @LinkClick</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"PaarshEdu fosters a vibrant learning culture through its online cross-department platform, encouraging innovation and collaboration. The engaging environment motivates me to expand my expertise across departments."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://i.pravatar.cc/150?img=8" alt="Nilesh Sawant">
+                        </div>
+                        <div class="author-info">
+                            <h4>Nilesh Sawant</h4>
+                            <p>Jr. Software Developer @Lineicons</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+
+    <script src="/js/main.js"></script>
+    <script>
+        // Category tabs functionality
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Video play button
+        const playButton = document.querySelector('.play-button');
+        if (playButton) {
+            playButton.addEventListener('click', function() {
+                alert('Video player will be integrated here');
+            });
+        }
+
+        // Scroll to top button
+        const scrollToTop = document.getElementById('scrollToTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTop.classList.add('active');
+            } else {
+                scrollToTop.classList.remove('active');
+            }
+        });
+
+        scrollToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.toggle('fa-sun');
+            icon.classList.toggle('fa-moon');
+        });
+    </script>
+</body>
+</html>

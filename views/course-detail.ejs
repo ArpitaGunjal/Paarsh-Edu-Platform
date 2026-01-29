@@ -1,0 +1,24 @@
+<%- include("partials/header") %>
+
+<section class="course-detail">
+  <div class="container">
+    <h1><%= course.name %></h1>
+    <p class="course-category"><%= course.category %></p>
+
+    <p class="course-description">
+      <%= course.description %>
+    </p>
+
+    <ul class="course-info">
+      <li><strong>Duration:</strong> <%= course.duration %></li>
+      <li><strong>Course Fee:</strong> ₹ <%= course.fee %></li>
+      <li><strong>Seats Available:</strong> 
+        <%= course.intakeLimit - course.enrolledCount %>
+      </li>
+    </ul>
+
+    <a href="/courses" class="btn-primary">Back to Courses</a>
+  </div>
+</section>
+
+<%- include("partials/footer") %>
