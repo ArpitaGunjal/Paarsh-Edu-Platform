@@ -9,148 +9,183 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <%- include('partials/header') %>
-    
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-shapes">
-            <div class="hero-shape shape-1"></div>
-            <div class="hero-shape shape-2"></div>
-        </div>
-        <div class="container">
-            <div class="hero-content">
-                <h1>
-                    Education is the door to the future
-                    & <span class="highlight">Paarsh Edu</span> is the key to a bright future
-                </h1>
-                <p>We provide innovative and accessible educational solutions, empowering individuals to unlock their potential and shape a brighter future.</p>
-                
-                <div class="hero-buttons">
-                    <a href="/courses" class="btn btn-primary">View Courses</a>
-                    <a href="tel:+919075201035" class="btn btn-secondary">
-                        <i class="fas fa-phone"></i> +91 90752 01035
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+<%- include('partials/header') %>
 
-    <!-- Top Courses Section -->
-<section class="top-courses-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>Top Courses</h2>
-      <p>Discover top courses to elevate your skills and unlock new opportunities for personal growth.</p>
+<!-- ================= HERO SECTION ================= -->
+<section class="hero">
+    <div class="hero-shapes">
+        <div class="hero-shape shape-1"></div>
+        <div class="hero-shape shape-2"></div>
     </div>
 
-    <div class="courses-slider-wrapper">
-      <div class="courses-slider">
-        <% courses.forEach(course => { %>
-        <div class="course-card-pro">
-          <div class="course-image-pro">
-            <img 
-              src="<%= course.thumbnail || 'https://source.unsplash.com/600x400/?technology,education' %>" 
-              alt="<%= course.title %>"
-            />
-            <span class="course-tag"><%= course.category %></span>
-          </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1>
+                Education is the door to the future
+                & <span class="highlight">Paarsh Edu</span> is the key to a bright future
+            </h1>
+            <p>
+                We provide innovative and accessible educational solutions, empowering individuals
+                to unlock their potential and shape a brighter future.
+            </p>
 
-          <div class="course-content-pro">
-            <h3><%= course.title %></h3>
-            <p><%= course.description %></p>
-
-            <div class="course-meta-pro">
-              <span><i class="fas fa-clock"></i> <%= course.duration || "N/A" %></span>
-              <span><i class="fas fa-certificate"></i> Certificate</span>
+            <div class="hero-buttons">
+                <a href="/courses" class="btn btn-primary">View Courses</a>
+                <a href="tel:+919075201035" class="btn btn-secondary">
+                    <i class="fas fa-phone"></i> +91 90752 01035
+                </a>
             </div>
-
-            <div class="course-footer-pro">
-              <span class="students">
-                <i class="fas fa-users"></i> <%= course.enrolledCount || 0 %> Students
-              </span>
-              <a href="/course/<%= course._id %>" class="view-btn">View</a>
-            </div>
-          </div>
         </div>
-        <% }); %>
-      </div>
     </div>
-  </div>
 </section>
 
+<!-- ================= TOP COURSES ================= -->
+<section class="top-courses-section">
+    <div class="container">
 
+        <div class="section-header">
+            <h2>Top Courses</h2>
+            <p>Discover top courses to elevate your skills and unlock new opportunities for personal growth.</p>
+        </div>
 
-    <!-- What Would You Like To Learn Section -->
-    <section class="learn-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>What Would You Like To <span class="highlight-blue">Learn</span></h2>
-                <p>Explore More and more.</p>
-            </div>
-            
-            <!-- Category Tabs -->
-            <div class="category-tabs">
-                <button class="category-tab active" data-category="non-it">NON-IT</button>
-                <button class="category-tab" data-category="languages">LANGUAGES</button>
-                <button class="category-tab" data-category="graphics">GRAPHICS DESIGNING</button>
-                <button class="category-tab" data-category="animation">ANIMATION</button>
-                <button class="category-tab" data-category="cloud">CLOUD TECHNOLOGIES</button>
-                <button class="category-tab" data-category="civil">CIVIL SERVICE</button>
-                <button class="category-tab" data-category="aptitude">APTITUDE TEST</button>
-                <button class="category-tab" data-category="accounts">ACCOUNTS/TALLY</button>
-                <button class="category-tab" data-category="stock">STOCK MARKET</button>
-                <button class="category-tab" data-category="education">STANDARD EDUCATION</button>
-                <button class="category-tab" data-category="database">DATABASE</button>
-                <button class="category-tab" data-category="soft-skills">SOFT SKILL & COMMUNICATION</button>
-                <button class="category-tab" data-category="bpms">BPMS SOFTWARE</button>
-                <button class="category-tab" data-category="training">TRAINING</button>
-                <button class="category-tab" data-category="music">MUSICAL INSTRUMENT</button>
-                <button class="category-tab" data-category="pharma">PHARMACEUTICALS</button>
-                <button class="category-tab" data-category="vedic">VEDIC MATH</button>
-                <button class="category-tab" data-category="digital">DIGITAL MARKETING</button>
-                <button class="category-tab" data-category="frameworks">FRAMEWORKS</button>
-                <button class="category-tab" data-category="it">IT</button>
-                <button class="category-tab" data-category="sales">SALES & MARKETING</button>
-            </div>
+        <div class="courses-slider-wrapper">
+            <div class="courses-slider">
 
-            <!-- Courses Grid -->
-            <div class="courses-grid-learn">
-                <% const learnCourses = courses.slice(3, 6); %>
-                <% learnCourses.forEach((course, index) => { %>
-                <div class="course-card-learn">
-                    <div class="course-badge-learn">
-                        <span class="badge-nonit">NON-IT</span>
+                <% if (courses && courses.length > 0) { %>
+                <% courses.forEach(course => { %>
+
+                <div class="course-card-pro">
+                    <div class="course-image-pro">
+                        <img
+                            src="<%= course.thumbnail || 'https://source.unsplash.com/600x400/?technology,education' %>"
+                            alt="<%= course.title %>"
+                        />
+                        <span class="course-tag">
+                            <%= course.level ? course.level.toUpperCase() : 'BEGINNER' %>
+                        </span>
                     </div>
-                    <div class="course-visual">
-                        <div class="visual-icon">
-                            <i class="fas fa-<%= index === 0 ? 'chart-bar' : index === 1 ? 'database' : 'brain' %>"></i>
-                        </div>
-                        <div class="visual-graphic">
-                            <img src="https://via.placeholder.com/300x200/14bdee/ffffff?text=<%= course.name.replace(/ /g, '+') %>" alt="<%= course.name %>">
-                        </div>
-                    </div>
-                    <div class="course-details-learn">
-                        <h3><%= course.name %></h3>
-                        <p><%= course.description || 'Turn raw data into insights with our hands-on ' + course.name + ' Program.' %></p>
-                        <div class="course-meta-learn">
+
+                    <div class="course-content-pro">
+                        <h3><%= course.title %></h3>
+                        <p><%= course.shortDescription || 'Course description coming soon.' %></p>
+
+                        <div class="course-meta-pro">
+                            <span>
+                                <i class="fas fa-clock"></i>
+                                <%= course.duration || 'N/A' %>
+                            </span>
+                            <% if (course.certificate) { %>
                             <span><i class="fas fa-certificate"></i> Certificate</span>
-                            <span><i class="fas fa-clock"></i> 180</span>
-                            <span><i class="fas fa-signal"></i> beginner</span>
-                            <span><i class="fas fa-users"></i> <%= course.enrolledCount %> students</span>
+                            <% } %>
                         </div>
-                        <div class="course-language-learn">
-                            <i class="fas fa-globe"></i> English, Hindi
+
+                        <div class="course-footer-pro">
+                            <span class="students">
+                                <i class="fas fa-users"></i>
+                                <%= course.enrolledCount || 0 %> Students
+                            </span>
+                            <a href="/course/<%= course._id %>" class="view-btn">View</a>
                         </div>
                     </div>
                 </div>
-                <% }); %>
+
+                <% }) %>
+                <% } else { %>
+                    <p>No courses available.</p>
+                <% } %>
+
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- How We Work Section -->
-    <section class="how-we-work-section">
+<!-- ================= WHAT WOULD YOU LIKE TO LEARN ================= -->
+<section class="learn-section">
+    <div class="container">
+
+        <div class="section-header">
+            <h2>What Would You Like To <span class="highlight-blue">Learn</span></h2>
+            <p>Explore More and more.</p>
+        </div>
+
+        <!-- CATEGORY TABS -->
+      <div class="category-tabs">
+ <button class="category-tab active" data-category="non-it">NON-IT</button>
+<button class="category-tab" data-category="languages">LANGUAGES</button>
+<button class="category-tab" data-category="graphics-designing">GRAPHICS DESIGNING</button>
+<button class="category-tab" data-category="animation">ANIMATION</button>
+<button class="category-tab" data-category="cloud-technologies">CLOUD TECHNOLOGIES</button>
+<button class="category-tab" data-category="it">IT</button>
+
+</div>
+
+
+
+        <!-- COURSES GRID -->
+        <div class="courses-grid-learn">
+
+            <% const learnCourses = courses; %>
+
+
+            <% learnCourses.forEach((course, index) => { 
+                const safeTitle = course.title || 'Course';
+            %>
+
+           <div class="course-card-learn"
+     data-category="<%= course.category?.name
+  ?.toLowerCase()
+  .replace(/\s+/g, '-') %>"
+"
+
+  <a href="/course/<%= course._id %>" class="course-link">
+
+    <div class="course-badge-learn">
+      <span class="badge-nonit">
+        <%= course.category?.name || 'GENERAL' %>
+      </span>
+    </div>
+
+    <div class="course-visual">
+      <div class="visual-icon">
+        <i class="fas fa-<%= index === 0 ? 'chart-bar' : index === 1 ? 'database' : 'brain' %>"></i>
+      </div>
+
+      <div class="visual-graphic">
+        <img src="<%= course.thumbnail %>" alt="<%= safeTitle %>">
+      </div>
+    </div>
+
+    <div class="course-details-learn">
+      <h3><%= safeTitle %></h3>
+      <p><%= course.shortDescription %></p>
+
+      <div class="course-meta-learn">
+        <span><i class="fas fa-certificate"></i> Certificate</span>
+        <span><i class="fas fa-clock"></i> <%= course.duration %></span>
+        <span><i class="fas fa-signal"></i> <%= course.level %></span>
+        <span><i class="fas fa-users"></i> <%= course.enrolledCount || 0 %></span>
+      </div>
+
+      <div class="course-language-learn">
+        <i class="fas fa-globe"></i>
+        <%= course.languages?.join(', ') || 'English' %>
+      </div>
+    </div>
+
+  </a>
+</div>
+
+
+            <% }) %>
+
+        </div>
+    </div>
+</section>
+
+<!-- ================= ALL OTHER SECTIONS (UNCHANGED) ================= -->
+<!-- HOW WE WORK -->
+ <section class="how-we-work-section">
         <div class="container">
             <div class="section-header">
                 <h2>How We Work</h2>
@@ -168,9 +203,8 @@
             </div>
         </div>
     </section>
-
-    <!-- Our Benefits Section -->
-    <section class="benefits-section" id="benefits">
+<!-- BENEFITS -->
+  <section class="benefits-section" id="benefits">
         <div class="container">
             <div class="benefits-wrapper">
                 <div class="benefits-content">
@@ -215,9 +249,8 @@
             </div>
         </div>
     </section>
-
-    <!-- Strategies for Student Section -->
-    <section class="strategies-section">
+<!-- STRATEGIES -->
+ <section class="strategies-section">
         <div class="container">
             <div class="section-header">
                 <h2><span class="highlight-blue">Strategies</span> for Student</h2>
@@ -267,9 +300,8 @@
             </div>
         </div>
     </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials-section">
+<!-- TESTIMONIALS -->
+ <section class="testimonials-section">
         <div class="container">
             <div class="section-header">
                 <h2>What Our Students Says</h2>
@@ -340,18 +372,41 @@
         </div>
     </section>
 
-    <%- include('partials/footer') %>
+<%- include('partials/footer') %>
 
-    <script src="/js/main.js"></script>
-    <script>
+<script src="/js/main.js"></script>
+<script>
         // Category tabs functionality
-        const categoryTabs = document.querySelectorAll('.category-tab');
-        categoryTabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                categoryTabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
+        
+document.addEventListener('DOMContentLoaded', () => {
+
+  const categoryTabs = document.querySelectorAll('.category-tab');
+  const courseCards = document.querySelectorAll('.course-card-learn');
+
+  function filterCourses(category) {
+    courseCards.forEach(card => {
+      card.style.display =
+        card.dataset.category === category ? 'block' : 'none';
+    });
+  }
+
+  // DEFAULT CATEGORY
+  filterCourses('non-it');
+
+  categoryTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+
+      categoryTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      filterCourses(tab.dataset.category);
+    });
+  });
+
+});
+
+
+
 
         // Video play button
         const playButton = document.querySelector('.play-button');
@@ -383,6 +438,8 @@
             icon.classList.toggle('fa-sun');
             icon.classList.toggle('fa-moon');
         });
+        
     </script>
+
 </body>
 </html>

@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
-
 import Course from "./models/Course.js";
 
 dotenv.config();
@@ -13,73 +12,47 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-/* -------------------- DATABASE -------------------- */
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log("✅ MongoDB Atlas connected"))
-.catch(err => console.log("❌ MongoDB connection error:", err));
+/* DB */
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.log(err));
 
-/* -------------------- MIDDLEWARE -------------------- */
+/* MIDDLEWARE */
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
-/* -------------------- ROUTES -------------------- */
+/* ROUTES */
 
-// Home Page
+// HOME
 app.get("/", async (req, res) => {
-  try {
-    const courses = await Course.find({ isActive: true });
-    res.render("index", { courses });
-  } catch (err) {
-    console.error(err);
-    res.render("index", { courses: [] });
-  }
+  const courses = await Course.find({ status: "active" });
+  res.render("index", { courses, page: "home" });
 });
 
-// Courses Page
+// COURSES LIST
 app.get("/courses", async (req, res) => {
-  try {
-    const { category } = req.query;
+  const courses = await Course.find({ status: "active" });
 
-    const filter = category
-      ? { category, isActive: true }
-      : { isActive: true };
+  console.log("COURSES FROM DB 👉", courses); // 👈 ADD THIS
 
-    const courses = await Course.find(filter);
-    const categories = await Course.distinct("category");
-
-    res.render("courses", {
-      courses,
-      categories,
-      selectedCategory: category || ""
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
-  }
+  res.render("courses", { courses });
 });
 
-// Course Detail Page
+
+// COURSE DETAIL
 app.get("/course/:id", async (req, res) => {
-  try {
-    const course = await Course.findById(req.params.id);
-
-    if (!course) {
-      return res.status(404).send("Course not found");
-    }
-
-    res.render("course-detail", { course });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
-  }
+  const course = await Course.findById(req.params.id);
+  if (!course) return res.send("Course not found");
+  res.render("course-detail", { course });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+// DEBUG (optional)
+app.get("/debug-courses", async (req, res) => {
+  res.json(await Course.find());
 });
+
+app.listen(3000, () =>
+  console.log("🚀 http://localhost:3000")
+);
