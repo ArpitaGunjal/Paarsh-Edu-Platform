@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,94 +11,151 @@
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- 🔥 YOUR CSS -->
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/course-detail.css">
 </head>
 
-
 <body class="bg-gray-100 min-h-screen">
 
-<!-- HEADER -->
-<%- include("partials/header") %>
+  <!-- HEADER -->
+  <%- include("partials/header") %>
 
-<div class="max-w-7xl mx-auto px-6 py-8">
+  <div class="max-w-7xl mx-auto px-6 py-8">
 
-  <a href="/courses" class="text-blue-600 hover:underline mb-6 inline-block">
-    ← Back to Courses
-  </a>
+    <a href="/courses" class="text-blue-600 hover:underline mb-6 inline-block">
+      ← Back to Courses
+    </a>
 
-  <!-- HERO -->
-  <div class="bg-white rounded-xl shadow-md p-6 grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+    <!-- HERO -->
+    <div class="bg-white rounded-xl shadow-md p-6 grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
 
-    <div>
-      <h1 class="text-3xl font-bold mb-2">
-        <%= course.title %>
-      </h1>
+      <div>
+        <h1 class="text-3xl font-bold mb-2">
+          <%= course.title %>
+        </h1>
 
-      <p class="text-gray-600 mb-4">
-        <%= course.shortDescription || course.description || "No description available." %>
-      </p>
+        <p class="text-gray-600 mb-4">
+          <%= course.shortDescription || course.fullDescription || "No description available." %>
+        </p>
 
-      <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-6">
-        <span>📘 <%= course.level || "Beginner" %></span>
-        <span>⏱ <%= course.duration || "N/A" %></span>
-        <span>👨‍🎓 <%= course.enrolledCount || 0 %> Students</span>
-      </div>
+        <% if (course.category) { %>
+          <p class="text-sm text-gray-500 mb-3">
+            <%= course.category.domain %> • <%= course.category.subDomain %>
+          </p>
+        <% } %>
 
-      <div class="flex gap-6 items-center">
-        <div class="text-2xl font-bold text-blue-600">
-          ₹<%= course.price || "Free" %>
+        <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-6">
+          <span>📘 <%= course.level || "Beginner" %></span>
+          <span>⏱ <%= course.duration || "N/A" %></span>
+          <span>👨‍🎓 <%= course.enrolledCount || 0 %> Students</span>
         </div>
 
-        <button class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
-          Enroll Now
-        </button>
+        <div class="flex gap-6 items-center">
+          <div class="text-2xl font-bold text-blue-600">
+            ₹<%= course.fee || "Free" %>
+          </div>
+
+          <button class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+            Enroll Now
+          </button>
+        </div>
       </div>
+
+      <img 
+        src="<%= course.thumbnail || 'https://source.unsplash.com/800x600/?education,technology' %>"
+        alt="<%= course.title %>"
+        class="w-full h-64 object-cover rounded-lg"
+      />
     </div>
 
-    <img 
-      src="<%= course.thumbnail || 'https://source.unsplash.com/800x600/?education,technology' %>"
-      alt="<%= course.title %>"
-      class="w-full h-64 object-cover rounded-lg"
-    />
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- LEFT -->
+      <div class="lg:col-span-2 space-y-6">
+
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h2 class="text-xl font-semibold mb-2">Course Overview</h2>
+          <p class="text-gray-600">
+            <%= course.fullDescription || "Detailed overview coming soon." %>
+          </p>
+        </div>
+
+        <!-- Course Content -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h2 class="text-xl font-semibold mb-4">Course Content</h2>
+
+          <% if (!contents || contents.length === 0) { %>
+            <p class="text-gray-500">Content will be available soon.</p>
+          <% } else { %>
+
+            <% let currentSection = null; %>
+
+            <% contents.forEach(item => { %>
+
+              <% if (currentSection !== item.sectionTitle) { %>
+                <% currentSection = item.sectionTitle; %>
+
+                <h3 class="text-lg font-semibold mt-4 mb-2 text-sky-600">
+                  <%= item.sectionTitle %>
+                </h3>
+              <% } %>
+
+              <div class="flex justify-between items-center border-b py-2 text-sm">
+
+                <div>
+                  <p class="font-medium">
+                    <%= item.lectureTitle %>
+                  </p>
+
+                  <p class="text-gray-500">
+                    <%= item.topic %>
+                    <% if(item.subTopic){ %>
+                      - <%= item.subTopic %>
+                    <% } %>
+                  </p>
+                </div>
+
+                <div class="text-xs text-gray-500">
+                  <%= item.lectureType === "video" ? "🎥 Video" : "📅 Live" %>
+                  <% if(item.isPreview){ %>
+                    • Preview
+                  <% } %>
+                </div>
+
+              </div>
+
+            <% }) %>
+
+          <% } %>
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="space-y-6">
+
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h2 class="text-lg font-semibold mb-2">Languages</h2>
+          <p class="text-gray-600">
+            <%= course.languages && course.languages.length ? course.languages.join(", ") : "English" %>
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h2 class="text-lg font-semibold mb-2">Certificate</h2>
+          <p class="text-gray-600">
+            <%= course.certificate ? "Yes, certificate included" : "No certificate" %>
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-    <div class="lg:col-span-2 space-y-6">
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <h2 class="text-xl font-semibold mb-2">Course Overview</h2>
-        <p class="text-gray-600">
-          <%= course.description || "Detailed overview coming soon." %>
-        </p>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <h2 class="text-xl font-semibold mb-2">What you'll learn</h2>
-        <ul class="list-disc list-inside text-gray-600 space-y-1">
-          <li>Build real-world projects</li>
-          <li>Master core concepts</li>
-          <li>Industry-level workflow</li>
-          <li>Problem-solving skills</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="space-y-6">
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <h2 class="text-lg font-semibold mb-2">Languages</h2>
-        <p class="text-gray-600">
-          <%= course.languages && course.languages.length ? course.languages.join(", ") : "English" %>
-        </p>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- FOOTER -->
-<%- include("partials/footer") %>
+  <!-- FOOTER -->
+  <%- include("partials/footer") %>
 
 </body>
 </html>

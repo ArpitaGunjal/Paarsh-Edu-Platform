@@ -39,7 +39,6 @@
         </div>
     </div>
 </section>
-
 <!-- ================= TOP COURSES ================= -->
 <section class="top-courses-section">
     <div class="container">
@@ -110,80 +109,93 @@
         </div>
 
         <!-- CATEGORY TABS -->
-      <div class="category-tabs">
- <button class="category-tab active" data-category="non-it">NON-IT</button>
-<button class="category-tab" data-category="languages">LANGUAGES</button>
-<button class="category-tab" data-category="graphics-designing">GRAPHICS DESIGNING</button>
-<button class="category-tab" data-category="animation">ANIMATION</button>
-<button class="category-tab" data-category="cloud-technologies">CLOUD TECHNOLOGIES</button>
-<button class="category-tab" data-category="it">IT</button>
-
-</div>
-
-
+        <div class="category-tabs">
+            <% 
+            // Get unique categories from the categories array
+            if (categories && categories.length > 0) { 
+                categories.forEach((category, index) => { 
+            %>
+                <button class="category-tab <%= index === 0 ? 'active' : '' %>" 
+                        data-category-id="<%= category._id %>">
+                    <%= category.subDomain.toUpperCase() %>
+                </button>
+            <% 
+                }) 
+            } else { 
+            %>
+                <button class="category-tab active" data-category-id="all">ALL COURSES</button>
+            <% } %>
+        </div>
 
         <!-- COURSES GRID -->
         <div class="courses-grid-learn">
 
-            <% const learnCourses = courses; %>
+            <% const learnCourses = courses || []; %>
 
+            <% if (learnCourses.length > 0) { %>
+                <% learnCourses.forEach((course, index) => { 
+                    const safeTitle = course.title || 'Course';
+                    const categoryId = course.category?._id?.toString() || '';
+                    const categoryName = course.category?.subDomain || 'General';
+                %>
 
-            <% learnCourses.forEach((course, index) => { 
-                const safeTitle = course.title || 'Course';
-            %>
+                <div class="course-card-learn" 
+                     data-category-id="<%= categoryId %>" 
+                     data-category-name="<%= categoryName %>" 
+                     style="display: none;">
+                    <a href="/course/<%= course._id %>" class="course-link" style="text-decoration:none;">
 
-           <div class="course-card-learn"
-     data-category="<%= course.category?.name
-  ?.toLowerCase()
-  .replace(/\s+/g, '-') %>"
-"
+                        <div class="course-badge-learn">
+                            <span class="badge-nonit">
+                                <%= categoryName.toUpperCase() %>
+                            </span>
+                        </div>
 
-  <a href="/course/<%= course._id %>" class="course-link">
+                        <div class="course-visual">
+                            <div class="visual-icon">
+                                <i class="fas fa-<%= index % 3 === 0 ? 'chart-bar' : index % 3 === 1 ? 'database' : 'brain' %>"></i>
+                            </div>
 
-    <div class="course-badge-learn">
-      <span class="badge-nonit">
-        <%= course.category?.name || 'GENERAL' %>
-      </span>
-    </div>
+                            <div class="visual-graphic">
+                                <img src="<%= course.thumbnail %>" alt="<%= safeTitle %>">
+                            </div>
+                        </div>
 
-    <div class="course-visual">
-      <div class="visual-icon">
-        <i class="fas fa-<%= index === 0 ? 'chart-bar' : index === 1 ? 'database' : 'brain' %>"></i>
-      </div>
+                        <div class="course-details-learn">
+                            <h3><%= safeTitle %></h3>
+                            <p><%= course.shortDescription %></p>
 
-      <div class="visual-graphic">
-        <img src="<%= course.thumbnail %>" alt="<%= safeTitle %>">
-      </div>
-    </div>
+                            <div class="course-meta-learn">
+                                <% if (course.certificate) { %>
+                                <span><i class="fas fa-certificate"></i> Certificate</span>
+                                <% } %>
+                                <span><i class="fas fa-clock"></i> <%= course.duration %></span>
+                                <span><i class="fas fa-signal"></i> <%= course.level %></span>
+                                <span><i class="fas fa-users"></i> <%= course.enrolledCount || 0 %></span>
+                            </div>
 
-    <div class="course-details-learn">
-      <h3><%= safeTitle %></h3>
-      <p><%= course.shortDescription %></p>
+                            <div class="course-language-learn">
+                                <i class="fas fa-globe"></i>
+                                <%= course.languages?.join(', ') || 'English' %>
+                            </div>
+                        </div>
 
-      <div class="course-meta-learn">
-        <span><i class="fas fa-certificate"></i> Certificate</span>
-        <span><i class="fas fa-clock"></i> <%= course.duration %></span>
-        <span><i class="fas fa-signal"></i> <%= course.level %></span>
-        <span><i class="fas fa-users"></i> <%= course.enrolledCount || 0 %></span>
-      </div>
+                    </a>
+                </div>
 
-      <div class="course-language-learn">
-        <i class="fas fa-globe"></i>
-        <%= course.languages?.join(', ') || 'English' %>
-      </div>
-    </div>
+                <% }) %>
+            <% } %>
 
-  </a>
-</div>
-
-
-            <% }) %>
+            <!-- No Courses Message -->
+            <div class="no-courses-message" style="display: none; grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">
+                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                <p style="font-size: 1.1rem;">No courses available in this category.</p>
+            </div>
 
         </div>
     </div>
 </section>
 
-<!-- ================= ALL OTHER SECTIONS (UNCHANGED) ================= -->
 <!-- HOW WE WORK -->
  <section class="how-we-work-section">
         <div class="container">
@@ -193,13 +205,16 @@
             </div>
             <div class="video-container">
                 <div class="video-wrapper">
-                    <div class="video-placeholder">
-                        <div class="play-button">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800" alt="Team Working" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
-                    </div>
-                </div>
+    <iframe
+        src="https://www.youtube.com/embed/GvbuEVkCue4?start=1"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="border-radius: 12px;">
+    </iframe>
+</div>
+
             </div>
         </div>
     </section>
@@ -249,6 +264,7 @@
             </div>
         </div>
     </section>
+
 <!-- STRATEGIES -->
  <section class="strategies-section">
         <div class="container">
@@ -300,7 +316,7 @@
             </div>
         </div>
     </section>
-<!-- TESTIMONIALS -->
+    <!-- TESTIMONIALS -->
  <section class="testimonials-section">
         <div class="container">
             <div class="section-header">
@@ -374,72 +390,56 @@
 
 <%- include('partials/footer') %>
 
+
 <script src="/js/main.js"></script>
+
 <script>
-        // Category tabs functionality
-        
 document.addEventListener('DOMContentLoaded', () => {
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    const courseCards = document.querySelectorAll('.course-card-learn');
+    const noCoursesMessage = document.querySelector('.no-courses-message');
 
-  const categoryTabs = document.querySelectorAll('.category-tab');
-  const courseCards = document.querySelectorAll('.course-card-learn');
+    function filterCourses(selectedCategoryId) {
+        let visibleCount = 0;
 
-  function filterCourses(category) {
-    courseCards.forEach(card => {
-      card.style.display =
-        card.dataset.category === category ? 'block' : 'none';
-    });
-  }
-
-  // DEFAULT CATEGORY
-  filterCourses('non-it');
-
-  categoryTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-
-      categoryTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-
-      filterCourses(tab.dataset.category);
-    });
-  });
-
-});
-
-
-
-
-        // Video play button
-        const playButton = document.querySelector('.play-button');
-        if (playButton) {
-            playButton.addEventListener('click', function() {
-                alert('Video player will be integrated here');
-            });
-        }
-
-        // Scroll to top button
-        const scrollToTop = document.getElementById('scrollToTop');
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollToTop.classList.add('active');
+        courseCards.forEach(card => {
+            const courseCategoryId = card.getAttribute('data-category-id');
+            
+            if (courseCategoryId === selectedCategoryId || selectedCategoryId === 'all') {
+                card.style.display = 'block';
+                visibleCount++;
             } else {
-                scrollToTop.classList.remove('active');
+                card.style.display = 'none';
             }
         });
 
-        scrollToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        if (noCoursesMessage) {
+            noCoursesMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+    }
 
-        // Theme toggle
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const icon = themeToggle.querySelector('i');
-            icon.classList.toggle('fa-sun');
-            icon.classList.toggle('fa-moon');
+    categoryTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs
+            categoryTabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            tab.classList.add('active');
+
+            // Get category ID and filter courses
+            const categoryId = tab.getAttribute('data-category-id');
+            filterCourses(categoryId);
         });
-        
-    </script>
+    });
+
+    // Trigger initial filter on page load
+    const defaultTab = document.querySelector('.category-tab.active');
+    if (defaultTab) {
+        const defaultCategoryId = defaultTab.getAttribute('data-category-id');
+        filterCourses(defaultCategoryId);
+    }
+});
+</script>
 
 </body>
 </html>

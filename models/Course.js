@@ -2,34 +2,178 @@ import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    shortDescription: { type: String, required: true },
-    fullDescription: String,
+    /* ================= BASIC INFO ================= */
 
-    thumbnail: { type: String, required: true },
-    introVideo: String,
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-    duration: { type: String, required: true },
+    shortDescription: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    fullDescription: {
+      type: String,
+      trim: true,
+    },
+
+    thumbnail: {
+      type: String,
+      required: true,
+    },
+
+    introVideo: {
+      type: String,
+    },
+
+    /* ================= META DETAILS ================= */
+
+    duration: {
+      type: String,
+      required: true,
+    },
+
     level: {
       type: String,
       enum: ["beginner", "intermediate", "advanced"],
-      required: true
+      required: true,
     },
 
-    languages: [String],
-    certificate: { type: Boolean, default: false },
+    languages: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
 
-    fee: { type: Number, required: true },
+    certificate: {
+      type: Boolean,
+      default: false,
+    },
 
-    enrolledCount: { type: Number, default: 0 },
+    /* ================= PRICING ================= */
+
+    fee: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    paymentType: {
+      type: String,
+      enum: ["one-time", "subscription"],
+      default: "one-time",
+    },
+
+    accessType: {
+      type: String,
+      default: "Lifetime access",
+    },
+
+    /* ================= COURSE CONTENT ================= */
+
+    courseIncludes: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+
+    syllabusOverview: {
+      type: String,
+      trim: true,
+    },
+
+    syllabusTopics: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+
+    syllabusFile: {
+      type: String,
+    },
+
+    prerequisites: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+
+    /* ================= INSTRUCTOR ================= */
+
+    instructor: {
+      name: {
+        type: String,
+        trim: true,
+      },
+      bio: {
+        type: String,
+        trim: true,
+      },
+      designation: {
+        type: String,
+        trim: true,
+      },
+    },
+
+    /* ================= CATEGORY ================= */
+
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+
+    tags: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+
+    /* ================= REVIEWS ================= */
+
+    averageRating: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 5,
+    },
+
+    ratingCount: {
+      type: Number,
+      default: 0,
+    },
+
+    /* ================= SYSTEM ================= */
+
+    intakeLimit: {
+      type: Number,
+      default: 10,
+      min: 1,
+    },
+
+    enrolledCount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
 
     status: {
       type: String,
       enum: ["active", "inactive", "full"],
-      default: "active"
-    }
+      default: "active",
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Course", courseSchema);
+const Course = mongoose.model("Course", courseSchema);
+export default Course;

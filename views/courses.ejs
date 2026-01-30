@@ -62,6 +62,13 @@
               <%= course.title %>
             </h2>
 
+            <!-- Category -->
+            <% if (course.category) { %>
+              <p class="text-xs text-gray-500 mb-2">
+                <%= course.category.domain %> • <%= course.category.subDomain %>
+              </p>
+            <% } %>
+
             <p class="text-sm text-gray-500 mb-4 leading-relaxed">
               <%= course.shortDescription || course.fullDescription || 'Course description coming soon.' %>
             </p>

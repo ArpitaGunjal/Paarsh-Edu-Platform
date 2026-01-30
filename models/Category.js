@@ -1,0 +1,40 @@
+import mongoose from "mongoose";
+
+const categorySchema = new mongoose.Schema(
+  {
+    domain: {
+      type: String, // IT, NON-IT
+      required: true,
+      trim: true,
+    },
+
+    subDomain: {
+      type: String, // Programming, Data Analytics
+      required: true,
+      trim: true,
+    },
+
+    tagline: {
+      type: String,
+      trim: true,
+    },
+
+    description: {
+      type: String,
+      trim: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active",
+    },
+  },
+  { timestamps: true }
+);
+
+/* prevent duplicate same category */
+categorySchema.index({ domain: 1, subDomain: 1 }, { unique: true });
+
+const Category = mongoose.model("Category", categorySchema);
+export default Category;
