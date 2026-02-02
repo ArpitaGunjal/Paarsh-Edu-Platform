@@ -7,6 +7,9 @@ import Course from "./models/Course.js";
 import CourseContent from "./models/CourseContent.js";
 import Category from "./models/Category.js";
 import Blog from "./models/Blog.js";  // ✅ ADD THIS
+import Lecture from "./models/lecture.js";
+import Assignment from "./models/Assignment.js";
+import Test from "./models/Test.js";
 
 dotenv.config();
 
@@ -25,6 +28,8 @@ mongoose
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // ✅ ADD THIS for JSON parsing
 
@@ -63,43 +68,96 @@ app.get("/api/courses/by-category/:categoryId", async (req, res) => {
 /* COURSES LIST */
 app.get("/courses", async (req, res) => {
   try {
-    const courses = await Course.find({ status: "active" })
-      .populate("category");
-    console.log("COURSES FROM DB 👉", courses);
-    res.render("courses", { 
+
+    const query = req.query.q || "";
+    const selectedCategory = req.query.category || null;
+
+    const filter = {};
+
+    if (query) {
+      filter.title = { $regex: query, $options: "i" };
+    }
+
+    if (selectedCategory) {
+      filter.category = selectedCategory;
+    }
+
+    const courses = await Course
+      .find(filter)
+      .populate("category")
+      .lean();
+
+    const categories = await Category.find().lean();
+
+    const popularCourses = await Course
+      .find()
+      .sort({ enrolledCount: -1 })
+      .limit(5)
+      .lean();
+
+    res.render("courses", {
       courses,
-      page: "courses" 
+      categories,
+      popularCourses,
+      query,
+      selectedCategory
     });
+
   } catch (err) {
     console.log(err);
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Error loading courses page");
   }
 });
+
 
 /* COURSE DETAIL */
-app.get("/course/:id", async (req, res) => {
+app.get("/courses/:id", async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id)
-      .populate("category");
-    if (!course) return res.send("Course not found");
-    
-    const contents = await CourseContent.find({
-      course: course._id,
-      isPublished: true
-    })
-      .sort({ sectionOrder: 1, lectureOrder: 1 });
-    
+
+    const course = await Course
+      .findById(req.params.id)
+      .populate("category")
+      .lean();
+
+    if (!course) {
+      return res.status(404).send("Course not found");
+    }
+
+    const contents = await CourseContent
+      .find({ course: course._id })
+      .sort({ order: 1 })
+      .lean();
+
+    const lectures = await Lecture
+      .find({ course: course._id })
+      .lean();
+
+    const demoLectures = lectures.filter(l => l.isPreview === true);
+
+    const assignments = await Assignment
+      .find({ course: course._id })
+      .lean();
+
+    const tests = await Test
+      .find({ course: course._id })
+      .lean();
+
     res.render("course-detail", {
       course,
-      contents
+      contents,
+      lectures,
+      demoLectures,   // ✅ ADD THIS
+      assignments,
+      tests
     });
+
   } catch (err) {
-    console.log(err);
-    res.status(500).send("Something went wrong");
+    console.error(err);
+    res.status(500).send("Error loading course details");
   }
 });
 
-// ====================================
+
 // BLOG ROUTES
 // ====================================
 

@@ -11,7 +11,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
   />
 
-  <!-- Tailwind -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Site Styles -->
@@ -24,93 +24,303 @@
   <%- include("partials/header") %>
 
   <!-- PAGE CONTAINER -->
-  <div class="max-w-7xl mx-auto px-6 py-12">
+  <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-4 gap-10">
 
-    <!-- TITLE -->
-    <h1 class="text-4xl font-bold mb-3">
-      All <span class="text-sky-500">Courses</span>
-    </h1>
+    <!-- LEFT: ALL COURSES -->
+    <div class="lg:col-span-3">
 
-    <p class="text-gray-600 max-w-3xl mb-12">
-      Discover a wide range of courses designed to enhance your skills, boost your knowledge,
-      and help you achieve your goals—learn at your own pace anytime, anywhere!
-    </p>
+      <h1 class="text-4xl font-bold mb-3">
+        All <span class="text-sky-500">Courses</span>
+      </h1>
 
-    <% if (!courses || courses.length === 0) { %>
-      <p class="text-gray-500 text-lg">No courses available at the moment.</p>
-    <% } else { %>
+      <p class="text-gray-600 max-w-3xl mb-6">
+        Discover a wide range of courses designed to enhance your skills, boost your knowledge,
+        and help you achieve your goals—learn at your own pace anytime, anywhere!
+      </p>
 
-    <!-- COURSES GRID -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <!-- COURSES CONTAINER -->
+      <div id="coursesContainer"
+           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all">
 
-      <% courses.forEach(course => { %>
+        <% if (!courses || courses.length === 0) { %>
+          <p class="col-span-full text-center text-gray-500 text-lg py-12">
+            No courses available at the moment.
+          </p>
+        <% } else { %>
 
-        <!-- COURSE CARD -->
-        <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300">
+          <% courses.forEach((course, index) => { %>
+            <div class="course-card bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
+                 data-index="<%= index %>">
 
-          <!-- IMAGE -->
-          <img
-            src="<%= course.thumbnail || 'https://source.unsplash.com/600x400/?education,technology' %>"
-            alt="<%= course.title %>"
-            class="h-60 w-full object-cover"
-          />
+              <!-- IMAGE + DOMAIN BADGE -->
+              <div class="relative flex-shrink-0">
+                <% if (course.category?.domain) { %>
+                  <span class="absolute top-3 right-3 px-3 py-1 text-xs font-semibold rounded-full bg-gray-900/90 text-white backdrop-blur-sm z-10">
+                    <%= course.category.domain %>
+                  </span>
+                <% } %>
 
-          <!-- CONTENT -->
-          <div class="p-6">
+                <img src="<%= course.thumbnail || 'https://source.unsplash.com/600x400/?education,technology' %>"
+                     alt="<%= course.title %>"
+                     class="course-thumbnail h-48 w-full object-cover" />
+              </div>
 
-            <h2 class="text-lg font-semibold text-gray-900 mb-1">
-              <%= course.title %>
-            </h2>
+              <!-- CONTENT -->
+              <div class="course-content p-5 flex flex-col flex-grow">
 
-            <!-- Category -->
-            <% if (course.category) { %>
-              <p class="text-xs text-gray-500 mb-2">
-                <%= course.category.domain %> • <%= course.category.subDomain %>
-              </p>
-            <% } %>
+                <h2 class="text-lg font-bold mb-2 line-clamp-2 min-h-[3.5rem]">
+                  <%= course.title %>
+                </h2>
 
-            <p class="text-sm text-gray-500 mb-4 leading-relaxed">
-              <%= course.shortDescription || course.fullDescription || 'Course description coming soon.' %>
-            </p>
+                <p class="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3 flex-grow">
+                  <%= course.shortDescription || course.fullDescription || 'Course description coming soon.' %>
+                </p>
 
-            <!-- TAGS -->
-            <div class="flex flex-wrap gap-2 mb-6 text-xs font-medium">
-              <span class="bg-sky-50 text-sky-600 px-3 py-1 rounded-full">
-                ⏱ <%= course.duration || 'N/A' %>
-              </span>
+                <div class="flex flex-wrap gap-2 mb-5 text-xs font-medium">
+                  <span class="bg-sky-50 text-sky-600 px-3 py-1.5 rounded-full flex items-center gap-1">
+                    <i class="far fa-clock"></i>
+                    <%= course.duration || 'N/A' %>
+                  </span>
+                  <span class="bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-full flex items-center gap-1">
+                    <i class="fas fa-signal"></i>
+                    <%= course.level || 'BEGINNER' %>
+                  </span>
+                  <span class="bg-emerald-50 text-emerald-600 px-3 py-1.5 rounded-full flex items-center gap-1">
+                    <i class="fas fa-user-graduate"></i>
+                    <%= course.enrolledCount || 0 %>
+                  </span>
+                  <% if (course.languages && course.languages.length > 0) { %>
+                    <span class="bg-purple-50 text-purple-600 px-3 py-1.5 rounded-full flex items-center gap-1">
+                      <i class="fas fa-language"></i>
+                      <%= course.languages.join(', ') %>
+                    </span>
+                  <% } %>
+                </div>
 
-              <span class="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full">
-                📘 <%= course.level ? course.level.toUpperCase() : 'BEGINNER' %>
-              </span>
+                <div class="flex justify-between items-center pt-4 border-t border-gray-100 mt-auto">
+                  <p class="text-xl font-bold text-sky-600">
+                    ₹<%= course.fee || 'Free' %>
+                  </p>
 
-              <span class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full">
-                👨‍🎓 <%= course.enrolledCount || 0 %> Students
-              </span>
+                  <a href="/courses/<%= course._id %>"
+                     class="bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium px-6 py-2.5 rounded-full transition-all duration-200 hover:shadow-lg">
+                    View Details
+                  </a>
+                </div>
+
+              </div>
             </div>
+          <% }) %>
 
-            <!-- FOOTER -->
-            <div class="flex items-center justify-between">
-              <p class="text-lg font-semibold text-sky-600">
-                ₹<%= course.fee ? course.fee : 'Free' %>
-              </p>
+        <% } %>
 
-              <a
-                href="/course/<%= course._id %>"
-                class="bg-sky-500 hover:bg-sky-600 text-white text-sm px-6 py-2 rounded-full transition"
-              >
-                View Details
-              </a>
-            </div>
+      </div>
 
-          </div>
+      <!-- VIEW MORE / LESS -->
+      <% if (courses && courses.length > 6) { %>
+        <div class="flex justify-center mt-12">
+          <button id="toggleBtn"
+                  onclick="toggleCourses()"
+                  class="px-8 py-3 bg-slate-800 text-white rounded-xl hover:bg-slate-700 transition font-medium">
+            View More
+          </button>
         </div>
-
-      <% }) %>
+      <% } %>
 
     </div>
-    <% } %>
 
+    <!-- RIGHT SIDEBAR -->
+    <div class="lg:col-span-1 space-y-6">
+
+      <!-- LAYOUT BUTTONS -->
+      <div class="flex justify-end gap-2">
+        <button onclick="setGridView()" 
+                id="gridBtn"
+                class="p-2.5 border-2 border-gray-200 rounded-lg hover:bg-gray-100 hover:border-sky-500 transition"
+                title="Grid View">
+          <i class="fas fa-th text-gray-600"></i>
+        </button>
+        <button onclick="setListView()" 
+                id="listBtn"
+                class="p-2.5 border-2 border-gray-200 rounded-lg hover:bg-gray-100 hover:border-sky-500 transition"
+                title="List View">
+          <i class="fas fa-bars text-gray-600"></i>
+        </button>
+      </div>
+
+      <!-- SEARCH -->
+      <form action="/courses" method="GET"
+            class="bg-white p-4 rounded-xl shadow-sm">
+        <div class="relative">
+          <input type="text"
+                 name="q"
+                 placeholder="Search courses..."
+                 class="w-full border-2 border-gray-200 rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent" />
+          <button type="submit" class="absolute right-3 top-3 text-gray-400 hover:text-sky-600">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+
+      <!-- POPULAR CATEGORIES (Optional - shown if categories exist) -->
+      <% if (typeof categories !== 'undefined' && categories && categories.length > 0) { %>
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <h3 class="text-lg font-semibold mb-4">Popular Categories</h3>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a href="/courses" class="text-gray-600 hover:text-sky-600 transition flex items-center gap-2">
+                <i class="fas fa-chevron-right text-xs"></i>
+                All Courses
+              </a>
+            </li>
+
+            <% categories.slice(0, 8).forEach(cat => { %>
+              <li>
+                <a href="/courses?category=<%= cat._id %>"
+                   class="text-gray-600 hover:text-sky-600 transition flex items-center gap-2">
+                  <i class="fas fa-chevron-right text-xs"></i>
+                  <%= cat.subDomain || cat.domain %>
+                </a>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
+
+      <!-- POPULAR COURSES (Optional - shown if popularCourses exist) -->
+      <% if (typeof popularCourses !== 'undefined' && popularCourses && popularCourses.length > 0) { %>
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <h3 class="text-xl font-semibold mb-4">Popular Courses</h3>
+
+          <div class="space-y-3">
+            <% popularCourses.slice(0, 5).forEach(course => { %>
+              <a href="/course/<%= course._id %>"
+                 class="flex gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all duration-200 group">
+                <img src="<%= course.thumbnail || 'https://source.unsplash.com/100x100/?education' %>"
+                     alt="<%= course.title %>"
+                     class="w-16 h-16 rounded-lg object-cover flex-shrink-0 group-hover:shadow-md transition" />
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-semibold truncate group-hover:text-sky-600 transition"><%= course.title %></p>
+                  <p class="text-xs text-gray-500 mt-1">
+                    <i class="fas fa-user-graduate"></i> <%= course.enrolledCount || 0 %> students
+                  </p>
+                  <p class="text-xs text-sky-600 font-semibold mt-1">
+                    ₹<%= course.fee || 'Free' %>
+                  </p>
+                </div>
+              </a>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+
+    </div>
   </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    const container = document.getElementById("coursesContainer");
+    const cards = document.querySelectorAll(".course-card");
+    const toggleBtn = document.getElementById("toggleBtn");
+    const gridBtn = document.getElementById("gridBtn");
+    const listBtn = document.getElementById("listBtn");
+    const LIMIT = 6;
+    let expanded = false;
+    let currentView = 'grid'; // Track current view
+
+    function updateButtonStates() {
+      if (currentView === 'grid') {
+        gridBtn.classList.add('bg-sky-100', 'border-sky-500');
+        gridBtn.querySelector('i').classList.add('text-sky-600');
+        gridBtn.querySelector('i').classList.remove('text-gray-600');
+        
+        listBtn.classList.remove('bg-sky-100', 'border-sky-500');
+        listBtn.querySelector('i').classList.remove('text-sky-600');
+        listBtn.querySelector('i').classList.add('text-gray-600');
+      } else {
+        listBtn.classList.add('bg-sky-100', 'border-sky-500');
+        listBtn.querySelector('i').classList.add('text-sky-600');
+        listBtn.querySelector('i').classList.remove('text-gray-600');
+        
+        gridBtn.classList.remove('bg-sky-100', 'border-sky-500');
+        gridBtn.querySelector('i').classList.remove('text-sky-600');
+        gridBtn.querySelector('i').classList.add('text-gray-600');
+      }
+    }
+
+    function applyVisibility() {
+      cards.forEach((card, index) => {
+        if (!expanded && index >= LIMIT) {
+          card.style.display = "none";
+        } else {
+          card.style.display = currentView === 'list' ? "flex" : "flex";
+        }
+      });
+
+      if (toggleBtn) {
+        toggleBtn.innerText = expanded ? "View Less" : "View More";
+      }
+    }
+
+    function toggleCourses() {
+      expanded = !expanded;
+      applyVisibility();
+    }
+
+    function setGridView() {
+      currentView = 'grid';
+      container.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all";
+      
+      cards.forEach(card => {
+        card.classList.remove('flex-row');
+        card.classList.add('flex-col');
+        
+        const thumbnail = card.querySelector('.course-thumbnail');
+        const content = card.querySelector('.course-content');
+        
+        if (thumbnail) {
+          thumbnail.classList.remove('w-64', 'h-full');
+          thumbnail.classList.add('h-48', 'w-full');
+        }
+        
+        if (content) {
+          content.classList.remove('w-full');
+        }
+      });
+      
+      updateButtonStates();
+      applyVisibility();
+    }
+
+    function setListView() {
+      currentView = 'list';
+      container.className = "flex flex-col gap-6 transition-all";
+      
+      cards.forEach(card => {
+        card.classList.remove('flex-col');
+        card.classList.add('flex-row');
+        
+        const thumbnail = card.querySelector('.course-thumbnail');
+        const content = card.querySelector('.course-content');
+        
+        if (thumbnail) {
+          thumbnail.classList.remove('h-48', 'w-full');
+          thumbnail.classList.add('w-64', 'h-full');
+        }
+        
+        if (content) {
+          content.classList.add('w-full');
+        }
+      });
+      
+      updateButtonStates();
+      applyVisibility();
+    }
+
+    // Initialize
+    updateButtonStates();
+    applyVisibility();
+  </script>
 
   <!-- FOOTER -->
   <%- include("partials/footer") %>

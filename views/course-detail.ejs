@@ -1,23 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title><%= course.title %> | Paarsh Edu</title>
+  <title><%= course.title %> | Course Details</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/course-detail.css">
+  <link rel="icon" href="/favicon.ico">
+
 </head>
 
 <body class="bg-gray-100 min-h-screen">
 
-  <!-- HEADER -->
   <%- include("partials/header") %>
 
   <div class="max-w-7xl mx-auto px-6 py-8">
@@ -28,11 +26,8 @@
 
     <!-- HERO -->
     <div class="bg-white rounded-xl shadow-md p-6 grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-
       <div>
-        <h1 class="text-3xl font-bold mb-2">
-          <%= course.title %>
-        </h1>
+        <h1 class="text-3xl font-bold mb-2"><%= course.title %></h1>
 
         <p class="text-gray-600 mb-4">
           <%= course.shortDescription || course.fullDescription || "No description available." %>
@@ -45,23 +40,25 @@
         <% } %>
 
         <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-6">
-          <span>📘 <%= course.level || "Beginner" %></span>
-          <span>⏱ <%= course.duration || "N/A" %></span>
-          <span>👨‍🎓 <%= course.enrolledCount || 0 %> Students</span>
+          <span><i class="fas fa-signal"></i> <%= course.level || "Beginner" %></span>
+          <span><i class="far fa-clock"></i> <%= course.duration || "N/A" %></span>
+          <span><i class="fas fa-user-graduate"></i> <%= course.enrolledCount || 0 %> Students</span>
+          <% if (course.intakeLimit) { %>
+            <span><i class="fas fa-users"></i> <%= course.intakeLimit %> Max Intake</span>
+          <% } %>
         </div>
 
         <div class="flex gap-6 items-center">
           <div class="text-2xl font-bold text-blue-600">
             ₹<%= course.fee || "Free" %>
           </div>
-
           <button class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
             Enroll Now
           </button>
         </div>
       </div>
 
-      <img 
+      <img
         src="<%= course.thumbnail || 'https://source.unsplash.com/800x600/?education,technology' %>"
         alt="<%= course.title %>"
         class="w-full h-64 object-cover rounded-lg"
@@ -70,82 +67,201 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-      <!-- LEFT -->
+      <!-- LEFT COLUMN -->
       <div class="lg:col-span-2 space-y-6">
 
+        <!-- Course Overview -->
         <div class="bg-white rounded-xl shadow-md p-6">
           <h2 class="text-xl font-semibold mb-2">Course Overview</h2>
           <p class="text-gray-600">
-            <%= course.fullDescription || "Detailed overview coming soon." %>
+            <%= course.fullDescription || course.shortDescription || "Detailed overview coming soon." %>
           </p>
         </div>
 
-        <!-- Course Content -->
+        <% if (course.introVideo) { %>
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4">Introduction Video</h2>
+            <div class="aspect-video">
+              <iframe
+                width="100%"
+                height="100%"
+                src="<%= course.introVideo %>"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="rounded-lg"></iframe>
+            </div>
+          </div>
+        <% } %>
+
+        <% if (course.syllabusOverview) { %>
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-2">Syllabus Overview</h2>
+            <p class="text-gray-600">
+              <%= course.syllabusOverview %>
+            </p>
+          </div>
+        <% } %>
+
+        <% if (course.syllabusTopics && course.syllabusTopics.length > 0) { %>
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4">Topics Covered</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <% course.syllabusTopics.forEach(topic => { %>
+                <div class="flex items-start gap-2">
+                  <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                  <span class="text-gray-600"><%= topic %></span>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
+
+        <!-- What you'll learn -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h2 class="text-xl font-semibold mb-4">What you'll learn</h2>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <li class="flex items-start gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i><span class="text-gray-600">Build real-world projects</span></li>
+            <li class="flex items-start gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i><span class="text-gray-600">Master fundamentals</span></li>
+            <li class="flex items-start gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i><span class="text-gray-600">Industry-level workflow</span></li>
+            <li class="flex items-start gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i><span class="text-gray-600">Problem-solving skills</span></li>
+          </ul>
+        </div>
+
+        <% if (course.prerequisites && course.prerequisites.length > 0) { %>
+          <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4">Prerequisites</h2>
+            <ul class="space-y-2">
+              <% course.prerequisites.forEach(prereq => { %>
+                <li class="flex items-start gap-2">
+                  <i class="fas fa-arrow-right text-blue-500 mt-1"></i>
+                  <span class="text-gray-600"><%= prereq %></span>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+        <% } %>
+
+        <!-- ONLY OLD CONTENT STRUCTURE (your backend sends this) -->
+        <% if (contents && contents.length > 0) { %>
         <div class="bg-white rounded-xl shadow-md p-6">
           <h2 class="text-xl font-semibold mb-4">Course Content</h2>
 
-          <% if (!contents || contents.length === 0) { %>
-            <p class="text-gray-500">Content will be available soon.</p>
-          <% } else { %>
+          <% let currentSection = null; %>
 
-            <% let currentSection = null; %>
+          <% contents.forEach(item => { %>
 
-            <% contents.forEach(item => { %>
+            <% if (currentSection !== item.sectionTitle) { %>
+              <% currentSection = item.sectionTitle; %>
+              <h3 class="text-lg font-semibold mt-4 mb-2 text-sky-600">
+                <%= item.sectionTitle %>
+              </h3>
+            <% } %>
 
-              <% if (currentSection !== item.sectionTitle) { %>
-                <% currentSection = item.sectionTitle; %>
+            <div class="flex justify-between items-center border-b py-2 text-sm">
 
-                <h3 class="text-lg font-semibold mt-4 mb-2 text-sky-600">
-                  <%= item.sectionTitle %>
-                </h3>
-              <% } %>
-
-              <div class="flex justify-between items-center border-b py-2 text-sm">
-
-                <div>
-                  <p class="font-medium">
-                    <%= item.lectureTitle %>
-                  </p>
-
-                  <p class="text-gray-500">
-                    <%= item.topic %>
-                    <% if(item.subTopic){ %>
-                      - <%= item.subTopic %>
-                    <% } %>
-                  </p>
-                </div>
-
-                <div class="text-xs text-gray-500">
-                  <%= item.lectureType === "video" ? "🎥 Video" : "📅 Live" %>
-                  <% if(item.isPreview){ %>
-                    • Preview
-                  <% } %>
-                </div>
-
+              <div>
+                <p class="font-medium"><%= item.lectureTitle %></p>
+                <p class="text-gray-500">
+                  <%= item.topic %>
+                  <% if(item.subTopic){ %> - <%= item.subTopic %> <% } %>
+                </p>
               </div>
 
-            <% }) %>
+              <div class="text-xs text-gray-500">
+                <%= item.lectureType === "video" ? "🎥 Video" : "📅 Live" %>
+                <% if(item.isPreview){ %> • Preview <% } %>
+              </div>
 
-          <% } %>
+            </div>
+
+          <% }) %>
         </div>
+        <% } %>
 
       </div>
 
-      <!-- RIGHT -->
+      <!-- RIGHT COLUMN -->
       <div class="space-y-6">
 
         <div class="bg-white rounded-xl shadow-md p-6">
-          <h2 class="text-lg font-semibold mb-2">Languages</h2>
-          <p class="text-gray-600">
-            <%= course.languages && course.languages.length ? course.languages.join(", ") : "English" %>
-          </p>
+          <h2 class="text-lg font-semibold mb-4">Course Details</h2>
+
+          <div class="space-y-3 text-sm">
+
+            <div class="flex items-start gap-3">
+              <i class="fas fa-language text-blue-500 mt-1"></i>
+              <div>
+                <p class="font-medium text-gray-700">Languages</p>
+                <p class="text-gray-600">
+                  <%= course.languages && course.languages.length ? course.languages.join(", ") : "English" %>
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <i class="fas fa-certificate text-blue-500 mt-1"></i>
+              <div>
+                <p class="font-medium text-gray-700">Certificate</p>
+                <p class="text-gray-600">
+                  <%= course.certificate ? "Yes, certificate included" : "No certificate" %>
+                </p>
+              </div>
+            </div>
+
+            <% if (course.status) { %>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-info-circle text-blue-500 mt-1"></i>
+              <div>
+                <p class="font-medium text-gray-700">Status</p>
+                <p class="text-gray-600 capitalize"><%= course.status %></p>
+              </div>
+            </div>
+            <% } %>
+
+            <div class="flex items-start gap-3">
+              <i class="fas fa-users text-blue-500 mt-1"></i>
+              <div>
+                <p class="font-medium text-gray-700">Students Enrolled</p>
+                <p class="text-gray-600"><%= course.enrolledCount || 0 %></p>
+              </div>
+            </div>
+
+          </div>
         </div>
 
+        <% if (course.tags && course.tags.length > 0) { %>
         <div class="bg-white rounded-xl shadow-md p-6">
-          <h2 class="text-lg font-semibold mb-2">Certificate</h2>
-          <p class="text-gray-600">
-            <%= course.certificate ? "Yes, certificate included" : "No certificate" %>
-          </p>
+          <h2 class="text-lg font-semibold mb-3">Tags</h2>
+          <div class="flex flex-wrap gap-2">
+            <% course.tags.forEach(tag => { %>
+              <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">
+                #<%= tag %>
+              </span>
+            <% }) %>
+          </div>
+        </div>
+        <% } %>
+
+        <% if (course.syllabusFile) { %>
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h2 class="text-lg font-semibold mb-3">Download Syllabus</h2>
+          <a href="<%= course.syllabusFile %>" target="_blank"
+             class="flex items-center justify-center gap-2 w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+            <i class="fas fa-download"></i>
+            Download PDF
+          </a>
+        </div>
+        <% } %>
+
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h2 class="text-lg font-semibold mb-3">Share Course</h2>
+          <div class="flex gap-2">
+            <button class="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition"><i class="fab fa-facebook-f"></i></button>
+            <button class="flex-1 bg-sky-500 text-white px-3 py-2 rounded-lg hover:bg-sky-600 transition"><i class="fab fa-twitter"></i></button>
+            <button class="flex-1 bg-pink-600 text-white px-3 py-2 rounded-lg hover:bg-pink-700 transition"><i class="fab fa-instagram"></i></button>
+            <button class="flex-1 bg-blue-700 text-white px-3 py-2 rounded-lg hover:bg-blue-800 transition"><i class="fab fa-linkedin-in"></i></button>
+          </div>
         </div>
 
       </div>
@@ -154,7 +270,6 @@
 
   </div>
 
-  <!-- FOOTER -->
   <%- include("partials/footer") %>
 
 </body>
