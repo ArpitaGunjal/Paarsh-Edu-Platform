@@ -1,0 +1,913 @@
+/**
+ * Dark Mode Styles - FIXED VERSION
+ * This only adds dark mode without touching light mode
+ * Your original #14bdee blue is preserved in BOTH modes
+ */
+
+/* ========================================
+   CSS VARIABLES - LIGHT THEME (DEFAULT)
+   ======================================== */
+:root {
+    /* Primary Colors - Your Original Blue */
+    --primary-color: #14bdee;
+    --primary-hover: #0da3d4;
+    --primary-light: #e0f7ff;
+    
+    /* Secondary Colors */
+    --secondary-color: #0e9ac7;
+    --secondary-hover: #0c8bb5;
+    
+    /* Background Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    --bg-hero: linear-gradient(135deg, #0e9ac7 0%, #14bdee 100%);
+    
+    /* Text Colors */
+    --text-primary: #1f2227;
+    --text-secondary: #666666;
+    --text-tertiary: #9ca3af;
+    --text-light: #ffffff;
+    --text-dark: #1f2227;
+    
+    /* Border Colors */
+    --border-color: #e0e0e0;
+    --border-hover: #cbd5e1;
+    
+    /* Card Colors */
+    --card-bg: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: rgba(20, 189, 238, 0.2);
+    
+    /* Top Bar */
+    --top-bar-bg: #2c2f35;
+    --top-bar-text: #ffffff;
+    
+    /* Header/Navbar */
+    --header-bg: #ffffff;
+    --header-shadow: rgba(0, 0, 0, 0.05);
+    
+    /* Footer */
+    --footer-bg: #2c2f35;
+    --footer-text: #cbd5e1;
+    
+    /* Buttons */
+    --btn-primary-bg: #14bdee;
+    --btn-primary-hover: #0da3d4;
+    --btn-secondary-bg: transparent;
+    --btn-secondary-border: #14bdee;
+    
+    /* Input Fields */
+    --input-bg: #ffffff;
+    --input-border: #e0e0e0;
+    --input-focus: #14bdee;
+    --input-text: #1f2227;
+    --input-placeholder: #9ca3af;
+    
+    /* Success/Error */
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --warning-color: #ffc107;
+    
+    /* Overlay */
+    --overlay-bg: rgba(0, 0, 0, 0.5);
+    
+    /* Shapes & Decorations */
+    --shape-primary: rgba(20, 189, 238, 0.1);
+    --shape-secondary: rgba(13, 163, 212, 0.1);
+    
+    /* Accent Color */
+    --accent-color: #ffffff;
+}
+
+/* ========================================
+   CSS VARIABLES - DARK THEME
+   ======================================== */
+[data-theme="dark"] {
+    /* Primary Colors - KEEP YOUR ORIGINAL BLUE! */
+    --primary-color: #14bdee;
+    --primary-hover: #22d3ee;
+    --primary-light: #0c4a6e;
+    
+    /* Secondary Colors */
+    --secondary-color: #0da3d4;
+    --secondary-hover: #0891b2;
+    
+    /* Background Colors */
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --bg-hero: linear-gradient(135deg, #0e9ac7 0%, #14bdee 100%);
+    
+    /* Text Colors */
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
+    --text-light: #ffffff;
+    --text-dark: #f1f5f9;
+    
+    /* Border Colors */
+    --border-color: #334155;
+    --border-hover: #475569;
+    
+    /* Card Colors */
+    --card-bg: #1e293b;
+    --card-shadow: rgba(0, 0, 0, 0.3);
+    --card-shadow-hover: rgba(20, 189, 238, 0.3);
+    
+    /* Top Bar */
+    --top-bar-bg: #020617;
+    --top-bar-text: #f1f5f9;
+    
+    /* Header/Navbar */
+    --header-bg: #1e293b;
+    --header-shadow: rgba(0, 0, 0, 0.3);
+    
+    /* Footer */
+    --footer-bg: #020617;
+    --footer-text: #94a3b8;
+    
+    /* Buttons */
+    --btn-primary-bg: #14bdee;
+    --btn-primary-hover: #22d3ee;
+    --btn-secondary-bg: transparent;
+    --btn-secondary-border: #14bdee;
+    
+    /* Input Fields */
+    --input-bg: #334155;
+    --input-border: #475569;
+    --input-focus: #14bdee;
+    --input-text: #f1f5f9;
+    --input-placeholder: #94a3b8;
+    
+    /* Success/Error */
+    --success-color: #22c55e;
+    --error-color: #ef4444;
+    --warning-color: #fbbf24;
+    
+    /* Overlay */
+    --overlay-bg: rgba(0, 0, 0, 0.7);
+    
+    /* Shapes & Decorations */
+    --shape-primary: rgba(20, 189, 238, 0.15);
+    --shape-secondary: rgba(13, 163, 212, 0.15);
+    
+    /* Accent Color */
+    --accent-color: #14bdee;
+}
+
+/* ========================================
+   THEME TRANSITION
+   ======================================== */
+html,
+body,
+.header,
+.top-bar,
+.footer,
+.card,
+.course-card,
+.course-card-modern,
+.course-card-pro,
+.course-card-learn,
+.testimonial-card,
+.strategy-item,
+.benefit-item,
+.blog-card,
+.why-us-item,
+.btn,
+input,
+textarea,
+select,
+.filter-btn,
+.search-box input,
+.category-tab {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ========================================
+   APPLY THEME VARIABLES
+   ======================================== */
+
+/* Body */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Top Bar */
+.top-bar {
+    background: var(--top-bar-bg);
+    color: var(--top-bar-text);
+}
+
+.top-bar a {
+    color: var(--top-bar-text);
+}
+
+.top-bar a:hover {
+    color: var(--primary-color);
+}
+
+/* Header */
+.header {
+    background: var(--header-bg);
+    box-shadow: 0 2px 10px var(--header-shadow);
+}
+
+.nav-link {
+    color: var(--text-primary);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .nav-menu {
+    background: var(--bg-secondary);
+}
+
+/* Hero Section - KEEPS YOUR BLUE GRADIENT */
+.hero,
+.blogs-hero {
+    background: var(--bg-hero);
+}
+
+/* Sections */
+section {
+    background-color: var(--bg-primary);
+}
+
+.section-header h2 {
+    color: var(--text-primary);
+}
+
+.section-header p {
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   COURSE CARDS - ALL TYPES
+   ======================================== */
+
+.course-card-modern,
+.course-card-pro,
+.course-card-learn,
+.testimonial-card,
+.blog-card,
+.why-us-item,
+.strategy-item,
+.benefit-item {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+    box-shadow: 0 4px 6px var(--card-shadow);
+}
+
+.course-card-modern:hover,
+.course-card-pro:hover,
+.course-card-learn:hover,
+.blog-card:hover,
+.why-us-item:hover,
+.strategy-item:hover,
+.benefit-item:hover {
+    box-shadow: 0 10px 20px var(--card-shadow-hover);
+}
+
+.course-card-modern h3,
+.course-card-pro h3,
+.course-card-learn h3,
+.blog-card h3,
+.testimonial-card h4,
+.why-us-item h3,
+.strategy-item h3,
+.benefit-item h3 {
+    color: var(--text-primary);
+}
+
+.course-card-modern p,
+.course-card-pro p,
+.course-card-learn p,
+.blog-card p,
+.testimonial-card p,
+.why-us-item p,
+.strategy-item p,
+.benefit-item p {
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   TAILWIND COURSES PAGE FIXES
+   ======================================== */
+
+/* Course Card Container */
+[data-theme="dark"] .course-card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .course-card:hover {
+    box-shadow: 0 20px 40px var(--card-shadow-hover) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Course Card Text */
+[data-theme="dark"] .course-card h2 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .course-card p {
+    color: var(--text-secondary) !important;
+}
+
+/* Tailwind Color Classes Dark Mode Overrides */
+[data-theme="dark"] .bg-white {
+    background-color: var(--card-bg) !important;
+}
+
+[data-theme="dark"] .bg-slate-50 {
+    background-color: var(--bg-primary) !important;
+}
+
+[data-theme="dark"] .bg-sky-50 {
+    background-color: rgba(20, 189, 238, 0.15) !important;
+}
+
+[data-theme="dark"] .text-sky-600,
+[data-theme="dark"] .bg-sky-50 {
+    color: #14bdee !important;
+}
+
+[data-theme="dark"] .bg-indigo-50 {
+    background-color: rgba(99, 102, 241, 0.15) !important;
+}
+
+[data-theme="dark"] .text-indigo-600 {
+    color: #818cf8 !important;
+}
+
+[data-theme="dark"] .bg-emerald-50 {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+[data-theme="dark"] .text-emerald-600 {
+    color: #34d399 !important;
+}
+
+[data-theme="dark"] .bg-purple-50 {
+    background-color: rgba(168, 85, 247, 0.15) !important;
+}
+
+[data-theme="dark"] .text-purple-600 {
+    color: #a78bfa !important;
+}
+
+[data-theme="dark"] .text-gray-600 {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .text-gray-500 {
+    color: var(--text-tertiary) !important;
+}
+
+[data-theme="dark"] .text-gray-800 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .bg-gray-100 {
+    background-color: var(--bg-tertiary) !important;
+}
+
+[data-theme="dark"] .border-gray-100,
+[data-theme="dark"] .border-gray-200 {
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .bg-gray-900\/90 {
+    background-color: rgba(15, 23, 42, 0.9) !important;
+}
+
+[data-theme="dark"] .shadow-sm {
+    box-shadow: 0 4px 6px var(--card-shadow) !important;
+}
+
+[data-theme="dark"] .bg-sky-100 {
+    background-color: rgba(20, 189, 238, 0.2) !important;
+}
+
+[data-theme="dark"] .border-sky-500 {
+    border-color: var(--primary-color) !important;
+}
+
+[data-theme="dark"] .bg-sky-500,
+[data-theme="dark"] .bg-slate-800 {
+    background-color: var(--primary-color) !important;
+}
+
+[data-theme="dark"] .bg-sky-500:hover,
+[data-theme="dark"] .hover\:bg-sky-600:hover,
+[data-theme="dark"] .hover\:bg-slate-700:hover {
+    background-color: var(--primary-hover) !important;
+}
+
+[data-theme="dark"] .hover\:bg-gray-50:hover {
+    background-color: var(--bg-tertiary) !important;
+}
+
+[data-theme="dark"] .hover\:bg-gray-100:hover {
+    background-color: var(--bg-tertiary) !important;
+}
+
+[data-theme="dark"] .hover\:border-sky-500:hover {
+    border-color: var(--primary-color) !important;
+}
+
+[data-theme="dark"] .hover\:text-sky-600:hover {
+    color: var(--primary-color) !important;
+}
+
+[data-theme="dark"] .group:hover .group-hover\:text-sky-600 {
+    color: var(--primary-color) !important;
+}
+
+/* ========================================
+   BLOG STYLES
+   ======================================== */
+
+/* Blog Card */
+[data-theme="dark"] .blog-card {
+    background: var(--card-bg);
+    box-shadow: 0 5px 20px var(--card-shadow);
+}
+
+[data-theme="dark"] .blog-card:hover {
+    box-shadow: 0 15px 40px var(--card-shadow-hover);
+}
+
+/* Blog Title */
+[data-theme="dark"] .blog-title {
+    color: var(--text-primary) !important;
+}
+
+/* Blog Excerpt */
+[data-theme="dark"] .blog-excerpt {
+    color: var(--text-secondary) !important;
+}
+
+/* Blog Meta */
+[data-theme="dark"] .blog-meta {
+    color: var(--text-tertiary) !important;
+}
+
+[data-theme="dark"] .blog-meta span {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .blog-meta i {
+    color: var(--primary-color) !important;
+}
+
+/* Blog Category Badge */
+[data-theme="dark"] .blog-category {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Blog Footer */
+[data-theme="dark"] .blog-footer {
+    border-top-color: var(--border-color) !important;
+}
+
+/* Read More Link */
+[data-theme="dark"] .read-more {
+    color: var(--primary-color) !important;
+}
+
+/* Blog Comments */
+[data-theme="dark"] .blog-comments {
+    color: var(--text-tertiary) !important;
+}
+
+/* ========================================
+   FORMS AND INPUTS
+   ======================================== */
+
+input,
+textarea,
+select {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--input-text);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--input-focus);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--input-placeholder);
+}
+
+/* Search Box */
+[data-theme="dark"] .search-box input {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--input-text);
+}
+
+[data-theme="dark"] .search-box input:focus {
+    border-color: var(--input-focus);
+}
+
+[data-theme="dark"] .search-box input::placeholder {
+    color: var(--input-placeholder);
+}
+
+[data-theme="dark"] .search-box i {
+    color: var(--text-tertiary);
+}
+
+/* Newsletter */
+[data-theme="dark"] .newsletter-section {
+    background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .newsletter-form input {
+    background: var(--input-bg);
+    color: var(--input-text);
+    border-color: var(--input-border);
+}
+
+[data-theme="dark"] .newsletter-form input:focus {
+    border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .newsletter-form input::placeholder {
+    color: var(--input-placeholder);
+}
+
+/* ========================================
+   BUTTONS AND FILTERS
+   ======================================== */
+
+/* Filter Buttons */
+[data-theme="dark"] .filter-btn {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .filter-btn:hover,
+[data-theme="dark"] .filter-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Category Tabs */
+[data-theme="dark"] .category-tab {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .category-tab:hover,
+[data-theme="dark"] .category-tab.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Pagination */
+[data-theme="dark"] .pagination button {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .pagination button:hover,
+[data-theme="dark"] .pagination button.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Primary Buttons */
+.btn-primary {
+    background-color: var(--btn-primary-bg);
+}
+
+.btn-primary:hover {
+    background-color: var(--btn-primary-hover);
+}
+
+/* Secondary Buttons */
+.btn-secondary {
+    background-color: var(--btn-secondary-bg);
+    border-color: var(--btn-secondary-border);
+    color: var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Outline Buttons */
+.btn-outline {
+    background: transparent;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ========================================
+   COURSE SPECIFIC ELEMENTS
+   ======================================== */
+
+/* Course Meta */
+.course-meta,
+.course-meta-pro,
+.course-meta-learn,
+.blog-meta {
+    color: var(--text-tertiary);
+}
+
+.course-meta-item,
+.meta-item-pro,
+.meta-learn-item {
+    color: var(--text-secondary);
+}
+
+/* Meta icons stay blue */
+.course-meta-item i,
+.meta-item-pro i,
+.meta-learn-item i,
+.blog-meta i {
+    color: var(--primary-color);
+}
+
+/* Course Tag - KEEPS YOUR BLUE */
+.course-tag,
+.badge,
+.badge-nonit {
+    background: var(--primary-color);
+    color: #ffffff;
+}
+
+/* Course Header Pro - KEEPS YOUR BLUE GRADIENT */
+.course-header-pro {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+/* Course Icon - KEEPS YOUR BLUE GRADIENT */
+.course-icon,
+.why-us-icon,
+.testimonial-avatar {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+/* View Button */
+[data-theme="dark"] .view-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+[data-theme="dark"] .view-btn:hover {
+    background: var(--primary-hover);
+}
+
+/* ========================================
+   BENEFITS & STRATEGIES SECTIONS
+   ======================================== */
+
+/* Benefits Section */
+[data-theme="dark"] .benefits-section {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .benefits-subtitle {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .benefit-item {
+    background: var(--card-bg);
+    border-left-color: var(--primary-color);
+}
+
+[data-theme="dark"] .benefit-item i {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .benefit-item span {
+    color: var(--text-secondary);
+}
+
+/* Visual Illustration */
+[data-theme="dark"] .visual-illustration,
+[data-theme="dark"] .visual-illustration-strategy {
+    background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .illustration-content i {
+    color: var(--primary-color);
+}
+
+/* Strategy Section */
+[data-theme="dark"] .strategies-section {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .strategy-item {
+    background: var(--card-bg);
+}
+
+[data-theme="dark"] .strategy-number {
+    background: var(--primary-color);
+}
+
+/* ========================================
+   VIDEO & TESTIMONIALS
+   ======================================== */
+
+/* Video Container */
+[data-theme="dark"] .video-container {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .video-wrapper {
+    border: 1px solid var(--border-color);
+}
+
+/* Testimonials */
+[data-theme="dark"] .testimonials-section {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .testimonial-card {
+    background: var(--card-bg);
+}
+
+[data-theme="dark"] .testimonial-text {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .author-info h4 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .author-info p {
+    color: var(--text-tertiary);
+}
+
+/* Stars stay gold */
+.stars i,
+.testimonial-rating i {
+    color: #fbbf24;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.footer {
+    background: var(--footer-bg);
+    color: var(--footer-text);
+}
+
+.footer h3,
+.footer h4 {
+    color: var(--text-light);
+}
+
+.footer-links a {
+    color: var(--footer-text);
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .footer-bottom {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Social Links */
+.social-links a:hover {
+    background: var(--primary-color);
+}
+
+/* ========================================
+   THEME TOGGLE BUTTON
+   ======================================== */
+
+.theme-toggle {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.theme-toggle:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.theme-toggle-active {
+    animation: themeToggleRotate 0.3s ease;
+}
+
+@keyframes themeToggleRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========================================
+   MISCELLANEOUS
+   ======================================== */
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    background: var(--primary-color);
+    color: white;
+}
+
+.scroll-to-top:hover {
+    background: var(--primary-hover);
+}
+
+/* No Courses/Blogs Message */
+[data-theme="dark"] .no-courses-message,
+[data-theme="dark"] .no-blogs {
+    color: var(--text-tertiary) !important;
+}
+
+/* Images in dark mode */
+[data-theme="dark"] img {
+    opacity: 0.92;
+    filter: brightness(0.95);
+}
+
+[data-theme="dark"] img:hover {
+    opacity: 1;
+    filter: brightness(1);
+}
+
+[data-theme="dark"] .hero-shapes .hero-shape {
+    opacity: 0.03;
+}
+
+/* Course/Blog content */
+[data-theme="dark"] .blog-content {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .blog-content h1,
+[data-theme="dark"] .blog-content h2,
+[data-theme="dark"] .blog-content h3 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .blog-content p,
+[data-theme="dark"] .blog-content li {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .blog-content code {
+    background: var(--bg-tertiary);
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .blog-content pre {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .blog-content blockquote {
+    background: var(--bg-tertiary);
+    border-left: 4px solid var(--primary-color);
+}
+
+/* Nav link underline */
+[data-theme="dark"] .nav-link.active::after {
+    background: var(--primary-color);
+}
+
+/* Price display */
+[data-theme="dark"] .price-pro,
+[data-theme="dark"] .course-card .text-xl {
+    color: var(--primary-color) !important;
+}

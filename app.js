@@ -10,6 +10,8 @@ import Blog from "./models/Blog.js";  // ✅ ADD THIS
 import Lecture from "./models/lecture.js";
 import Assignment from "./models/Assignment.js";
 import Test from "./models/Test.js";
+import Enquiry from "./models/Enquiry.js";
+
 
 dotenv.config();
 
@@ -388,6 +390,34 @@ app.delete('/admin/blogs/:id', async (req, res) => {
         console.error('Error deleting blog:', error);
         res.status(500).json({ success: false, message: 'Error deleting blog' });
     }
+});
+app.get("/contact", (req, res) => {
+    res.render("contact", { page: "contact" });
+});
+
+
+
+app.post("/enquiries", async (req, res) => {
+
+    try{
+
+        const enquiry = new Enquiry({
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            source: req.body.source || "contact",
+            message: req.body.message
+        });
+
+        await enquiry.save();
+
+        res.json({ success:true });
+
+    }catch(err){
+        console.error(err);
+        res.status(500).json({ success:false });
+    }
+
 });
 
 

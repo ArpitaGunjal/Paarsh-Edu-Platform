@@ -68,7 +68,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe all cards and sections
-document.querySelectorAll('.course-card-modern, .course-card-learn, .testimonial-card, .strategy-item, .benefit-item').forEach(element => {
+document.querySelectorAll('.course-card-modern, .course-card-learn, .course-card-pro, .testimonial-card, .strategy-item, .benefit-item').forEach(element => {
     element.style.opacity = '0';
     element.style.transform = 'translateY(30px)';
     element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -112,32 +112,10 @@ if (scrollToTop) {
     });
 }
 
-// Theme toggle functionality
-const themeToggle = document.getElementById('themeToggle');
-if (themeToggle) {
-    // Check for saved theme preference
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    if (currentTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
-    }
-
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const icon = themeToggle.querySelector('i');
-        
-        if (document.body.classList.contains('dark-mode')) {
-            icon.classList.replace('fa-sun', 'fa-moon');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            icon.classList.replace('fa-moon', 'fa-sun');
-            localStorage.setItem('theme', 'light');
-        }
-    });
-}
+// Theme toggle functionality is now handled by theme.js
 
 // Course card hover effect enhancement
-const courseCards = document.querySelectorAll('.course-card-modern, .course-card-learn');
+const courseCards = document.querySelectorAll('.course-card-modern, .course-card-learn, .course-card-pro');
 courseCards.forEach(card => {
     card.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-10px) scale(1.02)';
@@ -227,4 +205,34 @@ const statsObserver = new IntersectionObserver((entries) => {
 const statsSection = document.querySelector('.hero-stats');
 if (statsSection) {
     statsObserver.observe(statsSection);
+}
+
+
+/* ===========================
+   Top courses auto slider
+=========================== */
+
+const topCoursesSlider = document.getElementById("topCoursesSlider");
+
+if(topCoursesSlider){
+
+    let scrollAmount = 0;
+
+    setInterval(() => {
+
+        const maxScroll =
+            topCoursesSlider.scrollWidth - topCoursesSlider.clientWidth;
+
+        scrollAmount += 340;   // one card + gap
+
+        if(scrollAmount >= maxScroll){
+            scrollAmount = 0;
+        }
+
+        topCoursesSlider.scrollTo({
+            left: scrollAmount,
+            behavior: "smooth"
+        });
+
+    }, 3000); // slides every 3 seconds
 }

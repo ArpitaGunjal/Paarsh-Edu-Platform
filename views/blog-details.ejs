@@ -7,7 +7,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
     <style>
+        :root{
+    --text-dark: var(--dark-color);
+}
+
+[data-theme="dark"]{
+    --text-dark: #f1f5f9;
+}
+
+
+
         .blog-detail-hero {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     padding: 60px 0 40px;
@@ -449,6 +460,109 @@
                 gap: 15px;
             }
         }
+        /* ===== BLOG DETAIL PAGE – LAYOUT FIX ===== */
+
+/* make whole section visually centered and wider */
+.blog-detail-container .container{
+    max-width: 1250px;
+}
+
+/* widen main content + balance sidebar */
+.blog-detail-grid{
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+}
+
+/* remove the feeling of a thin left column */
+.blog-main-content{
+    padding: 45px;
+}
+
+/* make sidebar visually aligned with main card */
+.blog-sidebar{
+    margin-top: 0;
+}
+
+/* reduce empty dark area feeling */
+.blog-detail-container{
+    padding-bottom: 100px;
+}
+/* ================= DARK MODE FIX – BLOG DETAIL PAGE ================= */
+
+[data-theme="dark"]{
+    --text-dark: #f1f5f9;   /* light text */
+}
+
+/* main card */
+[data-theme="dark"] .blog-main-content,
+[data-theme="dark"] .sidebar-widget,
+[data-theme="dark"] .comment-item,
+[data-theme="dark"] .comment-form{
+    background:#020617;
+    box-shadow:none;
+}
+
+/* body text */
+[data-theme="dark"] .blog-content,
+[data-theme="dark"] .comment-text,
+[data-theme="dark"] .contact-sub{
+    color:#cbd5f5;
+}
+
+/* meta + small text */
+[data-theme="dark"] .meta-item,
+[data-theme="dark"] .related-post-date,
+[data-theme="dark"] .author-info p{
+    color:#94a3b8;
+}
+
+/* titles */
+[data-theme="dark"] .blog-detail-title,
+[data-theme="dark"] .widget-title,
+[data-theme="dark"] .section-title,
+[data-theme="dark"] .related-post-info h4,
+[data-theme="dark"] .comment-author,
+[data-theme="dark"] .author-info h4{
+    color:#f8fafc;
+}
+
+/* borders */
+[data-theme="dark"] .blog-detail-meta,
+[data-theme="dark"] .category-list li{
+    border-color:#1e293b;
+}
+
+/* inputs */
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea,
+[data-theme="dark"] .newsletter-form input{
+    background:#020617;
+    color:#f8fafc;
+    border-color:#1e293b;
+}
+
+/* blockquote */
+[data-theme="dark"] .blog-content blockquote{
+    background:#020617;
+    color:#cbd5f5;
+}
+/* ---------- Author box dark mode fix ---------- */
+
+[data-theme="dark"] .author-box{
+    background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+    border: 1px solid #1e293b;
+}
+
+[data-theme="dark"] .author-info h4{
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .author-info p{
+    color: #cbd5e1;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -607,15 +721,7 @@
                     <% } %>
                 </div>
 
-                <!-- Newsletter Widget -->
-                <div class="sidebar-widget newsletter-widget">
-                    <h3 class="widget-title">Newsletter</h3>
-                    <p>Subscribe to get the latest updates and articles delivered to your inbox.</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your email address" required>
-                        <button type="submit">Subscribe Now</button>
-                    </form>
-                </div>
+                
 
             </aside>
 
@@ -633,5 +739,6 @@
 
 <script src="/js/main.js"></script>
 
+<script src="/js/theme.js"></script>
 </body>
 </html>

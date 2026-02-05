@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us - Paarsh Edu</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .contact-section{
+            padding:80px 0;
+        }
+
+        .contact-card{
+            background:#fff;
+            border-radius:18px;
+            padding:40px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        [data-theme="dark"] .contact-card{
+            background:#0f172a;
+        }
+
+        .contact-grid{
+            display:grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap:50px;
+        }
+
+        .contact-title{
+            font-size:32px;
+            font-weight:700;
+            margin-bottom:10px;
+            color:var(--dark-color);
+        }
+
+        [data-theme="dark"] .contact-title{
+            color:#f1f5f9;
+        }
+
+        .contact-sub{
+            color:var(--gray-color);
+            margin-bottom:25px;
+        }
+
+        .contact-form input,
+        .contact-form textarea{
+            width:100%;
+            padding:14px 16px;
+            border-radius:10px;
+            border:2px solid #e5e7eb;
+            font-family:inherit;
+        }
+
+        [data-theme="dark"] .contact-form input,
+        [data-theme="dark"] .contact-form textarea{
+            background:#020617;
+            color:#f1f5f9;
+            border-color:#1e293b;
+        }
+
+        .contact-form textarea{
+            min-height:120px;
+        }
+
+        .contact-form label{
+            display:block;
+            margin-bottom:6px;
+            font-weight:600;
+        }
+
+        .contact-info-item{
+            display:flex;
+            gap:14px;
+            margin-bottom:20px;
+            align-items:flex-start;
+        }
+
+        .contact-info-item i{
+            color:var(--primary-color);
+            font-size:18px;
+            margin-top:4px;
+        }
+
+        @media(max-width:900px){
+            .contact-grid{
+                grid-template-columns:1fr;
+            }
+        }
+        /* reduce top spacing on contact page */
+
+.blog-detail-hero{
+    padding: 20px 0 15px !important;
+}
+
+.contact-section{
+    padding-top: 30px !important;
+}
+/* Contact page – Send Enquiry button */
+
+.submit-btn{
+    margin-top: 10px;
+    padding: 14px 34px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--secondary-color)
+    );
+
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: .4px;
+
+    box-shadow: 0 8px 18px rgba(20,189,238,.35);
+    transition: all .25s ease;
+}
+
+.submit-btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(20,189,238,.45);
+}
+
+.submit-btn:active{
+    transform: translateY(0);
+}
+
+    </style>
+</head>
+<body>
+
+<%- include('partials/header', { page:'contact' }) %>
+
+<!-- hero same style as blog -->
+<section class="blog-detail-hero">
+    <div class="container">
+        <div class="blog-breadcrumb">
+            <a href="/">Home</a>
+            <span>/</span>
+            <span>Contact</span>
+        </div>
+    </div>
+</section>
+
+<section class="contact-section">
+    <div class="container">
+
+        <div class="contact-card">
+
+            <div class="contact-grid">
+
+                <!-- FORM -->
+                <div>
+                    <h2 class="contact-title">Contact Us</h2>
+                    <p class="contact-sub">Have a question? Send us your enquiry.</p>
+
+                    <form id="contactForm" class="contact-form">
+
+                        <label>Name *</label>
+                        <input type="text" name="name" required>
+
+                        <br><br>
+
+                        <label>Email *</label>
+                        <input type="email" name="email" required>
+
+                        <br><br>
+
+                        <label>Phone *</label>
+                        <input type="text" name="phone" required>
+
+                        <br><br>
+
+                        <label>Message</label>
+                        <textarea name="message"></textarea>
+
+                        <!-- important for your schema -->
+                        <input type="hidden" name="source" value="contact">
+
+                        <br>
+
+                        <button type="submit" class="submit-btn">
+                            Send Enquiry
+                        </button>
+
+                    </form>
+                </div>
+
+                <!-- INFO -->
+                <div>
+                    <h3 class="contact-title" style="font-size:24px;">Get in touch</h3>
+
+                    <div class="contact-info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>+91 90752 01035</div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>paarshedu@gmail.com</div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            Paarsh Edu, Deepali Nagar,<br>
+                            Nashik, Maharashtra
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<%- include('partials/footer') %>
+
+<script>
+const form = document.getElementById("contactForm");
+
+form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try{
+        const res = await fetch("/enquiries",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if(result.success){
+            alert("Enquiry sent successfully!");
+            form.reset();
+        }else{
+            alert("Something went wrong");
+        }
+
+    }catch(err){
+        alert("Server error");
+    }
+
+});
+</script>
+
+<script src="/js/theme.js"></script>
+</body>
+</html>

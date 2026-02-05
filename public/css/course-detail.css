@@ -3,7 +3,7 @@
 .page-header {
     background: linear-gradient(135deg, #0e9ac7, #14bdee);
     padding: 60px 0;
-    color: var(--light-color);
+    color: #ffffff;
     text-align: center;
 }
 
@@ -35,12 +35,14 @@
     font-weight: 500;
     transition: var(--transition);
     text-transform: capitalize;
+    border: 1px solid var(--border-color);
 }
 
 .filter-btn:hover,
 .filter-btn.active {
     background: var(--primary-color);
-    color: var(--light-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
 }
 
 .no-courses {
@@ -69,7 +71,7 @@
 .course-hero {
     background: linear-gradient(135deg, #0e9ac7, #14bdee);
     padding: 60px 0;
-    color: var(--light-color);
+    color: #ffffff;
 }
 
 .course-hero-content {
@@ -87,6 +89,7 @@
     font-size: 14px;
     margin-bottom: 20px;
     text-transform: capitalize;
+    backdrop-filter: blur(10px);
 }
 
 .course-badge-large i {
@@ -131,6 +134,7 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 100px;
+    border: 1px solid var(--border-color);
 }
 
 .enrollment-price {
@@ -144,6 +148,7 @@
     font-size: 48px;
     color: var(--primary-color);
     margin-bottom: 5px;
+    font-weight: 700;
 }
 
 .enrollment-price p {
@@ -201,22 +206,63 @@
     color: var(--gray-color);
 }
 
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--light-gray);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
 .btn-enroll {
     width: 100%;
     padding: 15px;
     font-size: 16px;
     margin-bottom: 15px;
+    background: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-enroll:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(20, 189, 238, 0.3);
 }
 
 .btn-download {
     width: 100%;
     padding: 12px;
     font-size: 14px;
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-download:hover {
+    background: var(--primary-color);
+    color: #ffffff;
 }
 
 /* Course Details Section */
 .course-details-section {
     padding: 60px 0;
+    background: var(--light-color);
 }
 
 .course-tabs {
@@ -324,6 +370,7 @@
     background: var(--light-gray);
     border-radius: 10px;
     overflow: hidden;
+    border: 1px solid var(--border-color);
 }
 
 .module-header {
@@ -339,11 +386,14 @@
     margin: 0;
     color: var(--dark-color);
     font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.module-header i {
+.module-header h4 i {
     color: var(--primary-color);
-    margin-right: 10px;
+    font-size: 20px;
 }
 
 .module-header span {
@@ -362,6 +412,11 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.module-lessons li:last-child {
+    border-bottom: none;
 }
 
 .module-lessons i {
@@ -376,6 +431,7 @@
     background: var(--light-gray);
     padding: 40px;
     border-radius: 15px;
+    border: 1px solid var(--border-color);
 }
 
 .instructor-avatar {
@@ -391,18 +447,24 @@
 
 .instructor-avatar i {
     font-size: 50px;
-    color: var(--light-color);
+    color: #ffffff;
 }
 
 .instructor-info h4 {
     font-size: 24px;
     margin-bottom: 5px;
+    color: var(--dark-color);
 }
 
 .instructor-title {
     color: var(--primary-color);
     font-weight: 500;
     margin-bottom: 15px;
+}
+
+.instructor-bio {
+    color: var(--gray-color);
+    line-height: 1.7;
 }
 
 .instructor-stats {
@@ -433,6 +495,7 @@
     padding: 30px;
     border-radius: 10px;
     margin-bottom: 30px;
+    border: 1px solid var(--border-color);
 }
 
 .rating-overview {
@@ -470,6 +533,7 @@
     background: var(--light-gray);
     padding: 25px;
     border-radius: 10px;
+    border: 1px solid var(--border-color);
 }
 
 .review-header {
@@ -529,7 +593,8 @@
 }
 
 @media (max-width: 640px) {
-    .course-hero h1 {
+    .course-hero h1,
+    .page-header h1 {
         font-size: 28px;
     }
 
@@ -541,4 +606,214 @@
         flex-direction: column;
         gap: 15px;
     }
+
+    .tab-content h3 {
+        font-size: 24px;
+    }
+}
+
+/* ==================== DARK MODE - KEEPS YOUR BLUE! ==================== */
+[data-theme="dark"] .page-header {
+    background: linear-gradient(135deg, #0e9ac7, #14bdee);
+}
+
+[data-theme="dark"] .course-hero {
+    background: linear-gradient(135deg, #0e9ac7, #14bdee);
+}
+
+[data-theme="dark"] .course-details-section {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .course-enrollment-card {
+    background: var(--card-bg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .enrollment-price h2 {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .enrollment-price {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .detail-item {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .detail-item i {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .detail-item strong {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .detail-item span {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .progress-bar {
+    background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .btn-enroll {
+    background: var(--primary-color);
+}
+
+[data-theme="dark"] .btn-enroll:hover {
+    background: var(--secondary-color);
+}
+
+[data-theme="dark"] .btn-download {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .btn-download:hover {
+    background: var(--primary-color);
+    color: #ffffff;
+}
+
+[data-theme="dark"] .course-tabs {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .tab-btn {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .tab-btn:hover,
+[data-theme="dark"] .tab-btn.active {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .tab-content h3,
+[data-theme="dark"] .tab-content h4 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .tab-content p {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .learning-outcomes li,
+[data-theme="dark"] .requirements-list li {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .learning-outcomes i {
+    color: var(--success-color);
+}
+
+[data-theme="dark"] .requirements-list i {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .module {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .module-header {
+    background: var(--card-bg);
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .module-header h4 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .module-header h4 i {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .module-header span {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .module-lessons li {
+    color: var(--text-primary);
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .module-lessons i {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .instructor-card {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .instructor-info h4 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .instructor-title {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .instructor-bio {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .i-stat strong {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .i-stat span {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .reviews-summary,
+[data-theme="dark"] .review-item {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .rating-number {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .rating-overview p {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .reviewer-info strong {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .review-date {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .review-text {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .filter-btn {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .filter-btn:hover,
+[data-theme="dark"] .filter-btn.active {
+    background: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .no-courses i {
+    color: var(--text-tertiary);
+}
+
+[data-theme="dark"] .no-courses h3 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .no-courses p {
+    color: var(--text-secondary);
 }

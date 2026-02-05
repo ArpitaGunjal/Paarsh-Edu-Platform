@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
 </head>
 <body>
 
@@ -40,6 +41,7 @@
     </div>
 </section>
 <!-- ================= TOP COURSES ================= -->
+<!-- ================= TOP COURSES ================= -->
 <section class="top-courses-section">
     <div class="container">
 
@@ -48,13 +50,24 @@
             <p>Discover top courses to elevate your skills and unlock new opportunities for personal growth.</p>
         </div>
 
+        <!-- arrows -->
+        <button class="slider-btn prev" id="topPrev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <button class="slider-btn next" id="topNext">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
         <div class="courses-slider-wrapper">
-            <div class="courses-slider">
+
+            <div class="courses-slider" id="topCoursesSlider">
 
                 <% if (courses && courses.length > 0) { %>
                 <% courses.forEach(course => { %>
 
                 <div class="course-card-pro">
+
                     <div class="course-image-pro">
                         <img
                             src="<%= course.thumbnail || 'https://source.unsplash.com/600x400/?technology,education' %>"
@@ -74,8 +87,9 @@
                                 <i class="fas fa-clock"></i>
                                 <%= course.duration || 'N/A' %>
                             </span>
+
                             <% if (course.certificate) { %>
-                            <span><i class="fas fa-certificate"></i> Certificate</span>
+                                <span><i class="fas fa-certificate"></i> Certificate</span>
                             <% } %>
                         </div>
 
@@ -84,9 +98,11 @@
                                 <i class="fas fa-users"></i>
                                 <%= course.enrolledCount || 0 %> Students
                             </span>
-                            <a href="/course/<%= course._id %>" class="view-btn">View</a>
+
+                            <a href="/courses/<%= course._id %>" class="view-btn">View</a>
                         </div>
                     </div>
+
                 </div>
 
                 <% }) %>
@@ -98,6 +114,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- ================= WHAT WOULD YOU LIKE TO LEARN ================= -->
 <section class="learn-section">
@@ -143,7 +160,7 @@
                      data-category-id="<%= categoryId %>" 
                      data-category-name="<%= categoryName %>" 
                      style="display: none;">
-                    <a href="/course/<%= course._id %>" class="course-link" style="text-decoration:none;">
+                    <a href="/courses/<%= course._id %>" class="course-link" style="text-decoration:none;">
 
                         <div class="course-badge-learn">
                             <span class="badge-nonit">
@@ -184,20 +201,23 @@
                 </div>
 
                 <% }) %>
-            <% } %>
 
-            <!-- No Courses Message -->
-            <div class="no-courses-message" style="display: none; grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">
-                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                <p style="font-size: 1.1rem;">No courses available in this category.</p>
-            </div>
+                <div class="no-courses-message" style="display: none; text-align: center; padding: 40px; grid-column: 1 / -1;">
+                    <i class="fas fa-book-open" style="font-size: 3rem; color: var(--text-tertiary); margin-bottom: 1rem;"></i>
+                    <p style="font-size: 1.2rem; color: var(--text-secondary);">No courses available in this category.</p>
+                </div>
+
+            <% } else { %>
+                <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                    <p>No courses available at the moment.</p>
+                </div>
+            <% } %>
 
         </div>
     </div>
 </section>
-
 <!-- HOW WE WORK -->
- <section class="how-we-work-section">
+ <section class="how-we-work-section" id="how-we-work">
         <div class="container">
             <div class="section-header">
                 <h2>How We Work</h2>
@@ -218,48 +238,62 @@
             </div>
         </div>
     </section>
-<!-- BENEFITS -->
-  <section class="benefits-section" id="benefits">
+
+<!-- ================= BENEFITS ================= -->
+    <section class="benefits-section" id="benefits">
         <div class="container">
-            <div class="benefits-wrapper">
-                <div class="benefits-content">
-                    <h2>Our Benefits</h2>
-                    <p class="benefits-subtitle">Empower your learning journey with our comprehensive educational benefits. We offer expert guidance, innovative resources, and personalized support to help you achieve excellence.</p>
-                    
-                    <div class="benefits-grid">
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Deliver quality education to your learners</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Automatically add completion certificates</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Provide video, documents, or external links</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Customize our flexible pricing plans</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Manage the courses our learners study</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>friendly environment</span>
-                        </div>
+            <div class="section-header">
+                <h2>Why Choose <span class="highlight-blue">Us</span></h2>
+                <p>Discover the unique advantages that set us apart and help you succeed.</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
                     </div>
+                    <h3>Expert Instructors</h3>
+                    <p>Learn from industry professionals with years of real-world experience and expertise in their fields.</p>
                 </div>
                 
-                <div class="benefits-visual">
-                    <div class="visual-illustration">
-                        <div class="illustration-content">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-certificate"></i>
                     </div>
+                    <h3>Certification</h3>
+                    <p>Earn recognized certificates upon course completion to showcase your skills and boost your career.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Flexible Learning</h3>
+                    <p>Study at your own pace with 24/7 access to course materials and lifetime updates.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Support</h3>
+                    <p>Join a vibrant community of learners, collaborate on projects, and network with peers.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Hands-on Projects</h3>
+                    <p>Apply your knowledge through real-world projects and build an impressive portfolio.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Get assistance whenever you need it with our dedicated support team always ready to help.</p>
                 </div>
             </div>
         </div>
@@ -392,6 +426,7 @@
 
 
 <script src="/js/main.js"></script>
+<script src="/js/theme.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {

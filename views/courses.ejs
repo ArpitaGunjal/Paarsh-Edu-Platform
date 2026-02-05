@@ -16,6 +16,7 @@
 
   <!-- Site Styles -->
   <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dark-mode.css">
 </head>
 
 <body class="bg-slate-50 text-gray-800">
@@ -194,7 +195,7 @@
 
           <div class="space-y-3">
             <% popularCourses.slice(0, 5).forEach(course => { %>
-              <a href="/course/<%= course._id %>"
+              <a href="/courses/<%= course._id %>"
                  class="flex gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all duration-200 group">
                 <img src="<%= course.thumbnail || 'https://source.unsplash.com/100x100/?education' %>"
                      alt="<%= course.title %>"
@@ -325,5 +326,6 @@
   <!-- FOOTER -->
   <%- include("partials/footer") %>
 
+<script src="/js/theme.js"></script>
 </body>
 </html>

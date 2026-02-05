@@ -21,24 +21,37 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-wrapper">
-                <a href="/" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <span class="logo-text">Paarsh edu</span>
-                </a>
+                <a href="/" class="logo brand">
+    <img 
+        src="/images/paarsh-logo.png"
+        alt="Paarsh logo"
+        class="brand-icon"
+    />
+    <span class="brand-text">
+        Paarsh <strong>E-Learning</strong>
+    </span>
+</a>
+
                 
                 <div class="nav-menu" id="navMenu">
                     <ul class="nav-list">
                         <li><a href="/" class="nav-link <%= typeof page !== 'undefined' && page === 'home' ? 'active' : '' %>">Home</a></li>
                         <li><a href="/courses" class="nav-link <%= typeof page !== 'undefined' && page === 'courses' ? 'active' : '' %>">Courses</a></li>
                         <li><a href="/blogs" class="nav-link <%= typeof page !== 'undefined' && page === 'blogs' ? 'active' : '' %>">Blogs</a></li>
+                        <li>
+  <a href="/contact"
+     class="nav-link <%= typeof page !== 'undefined' && page === 'contact' ? 'active' : '' %>">
+     Contact
+  </a>
+</li>
+
+
                     </ul>
                 </div>
 
                 <div class="nav-right">
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon"></i>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
                     </button>
                     <a href="#" class="btn btn-primary btn-sm">Sign In</a>
                 </div>
@@ -52,3 +65,18 @@
         </div>
     </nav>
 </header>
+
+<!-- Theme Toggle Script - Loaded immediately to prevent flash -->
+<script>
+    // Initialize theme from localStorage or default to light
+    (function() {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon immediately
+        const icon = document.getElementById('themeIcon');
+        if (icon) {
+            icon.className = currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+    })();
+</script>
